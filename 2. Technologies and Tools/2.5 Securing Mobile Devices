@@ -1,0 +1,150 @@
+Mobile Device Connection Methods
+
+cellular networks
+-sec concerns: traffic/location monitoring
+-wifi: local sec problems as other wifi devices
+
+SATCOM - Satellite communications
+-remote locations, natural disasters
+-literally talking to space (low earth orbit or geostationary)
+-voice and data comms
+-handheld can be sec risk (same as mobile)
+
+NFC - near field communication
+-remote capture, 10m active
+-freq jamming, replay/relay attack
+
+ANT/ANT+
+- wireless sensor network protocol
+- 2.4 GHz ISM band (industrial, scientific and medical)
+- IoT ultra-low-power protocol
+- fitness devices, heart rate monitors etc.
+- separate wireless service, not 802.11/bluetooth
+- optional encryption, no method to maintain integrity
+
+IR (Infrared)
+- phones, tablets, smartwatches, entertainment cetner
+- file transfer possible
+
+USB (Universal Serial Bus)
+- usb to PC, Lightning
+- physical access always a concern
+
+---
+
+Mobile Device Management (MDM)
+
+
+- Centralized mngmt of the mobile devices
+- set policies on data, app, camera etc.
+- control remote device, entire device or "partition"
+- manage access contrtol: force screen lock / PINs
+
+-Application management
+	-challenging, some are malicious
+	-some orgs manage through whitelists, new apps must be checked and added
+
+-Mobile Content Management (MCM)
+- secure access to data
+- file sharing and viewing: on-site (file server, sharepoint), cloud-based (box, O365)
+-DLP prevents copy/paste sensitive data
+
+-Remote wipe (remember backup)
+
+-Geofencing
+	-restrict/allow features when device in particular area
+	-camera might only work outside office
+	-authentication allowed only in particular area
+
+Context-aware authenticaction
+-Combine multiple contexts
+	-where you normally login (IP)
+	-frequent (GPS info)
+	-other devices (bluetooth pair)
+-emerging technology
+
+Containerization
+- difficult to separate personal/business
+	- specially if BYOD
+- separate enterprise mobile apps/data
+	- virtual "container" for company data
+	- storage segmentation keps data separate
+
+Full device encryption
+-key often backed up on the MDM
+
+
+---
+
+Mobile Device Enforcement 
+
+
+-Third-party app stores
+	-MDM can allow/deny app store use
+
+Rooting/jailbreaking
+- Mobile dev are purpose-built systems, no need to access OS
+- MDM becomes useless, circumvent sec features, sideload apps
+
+Carrier unlocking
+- most phones locked to carrier
+- unlocking may be illegal
+
+Firmware OTA updates (Over-the-Air)
+- OS gets updates on the air
+- MDM can manage what OTA updates allowed
+
+Camera
+- use can be limited by MDM
+
+SMS/MMS
+-short message service / multimedia messaging service
+-outobund data leaks, phishing attempts
+
+USB OTG (On-the-Go)
+- connect mobile devices directly together
+
+Mic (recording)
+- legal liability
+
+Geotagging / GPS tagging
+- adds your location to document metadata
+- can track user quite easily
+
+WiFi Direct/ad hoc
+- connect wireless devices directly, no need for AP
+- simplicity can aid vulns (invisible access to device)
+
+Hotspot/tethering
+- may turn your phone in to rogue AP > access to internal network
+
+
+----
+
+Mobile Device Deployment Models
+
+BYOD
+-difficult to secure since personal/work use
+
+COPE (Corporate Owned, Personally enabled)
+- org buys device, used for work and personal
+- similiar to company-owned workstations
+- information protected using corp policies
+- CYOD (Choose Your Own device)
+	- like COPE, but you choose device
+
+Corporate owned
+- org owns/controls device
+- no personal use, cant mix home/business
+- specific sec req
+
+VDI/VMI
+- virtual desktop/mobile infrastructure
+- apps /data are separated from mobile device
+- data stored securely, cetralized
+- physical device loss risk is minimized
+- centralized app development (write for single VMI platform)
+- apps managed centrally
+
+
+
