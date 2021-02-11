@@ -1,0 +1,253 @@
+Public Key Infrastructure
+
+PKI Components
+
+PKI
+- policies, procedures, hardware, software, people
+	- digital certs: create, distribute, manage, store, revoke
+- big thing, lots of planning
+- also refers to binding of public keys to people/devices
+	- CA
+	- all about trust
+
+Key management lifecycle
+- key generation
+	- create key with requested strength using proper cipher
+- certificate generation
+	- allocate key to a user
+- distribution
+	- make the key available to the user
+- storage
+	- securely store and protect against unauthorized use
+- revocation
+	- manage keys that have been compromised
+- expiration
+	- cert may only have a certain "shelf life"
+
+Digital certificate
+- public key cert
+	- binds public key with a digital signature
+	- and other details about the key holder
+- digital signature adds trust
+	- PKI uses CA for additional trus
+	- Web of Trust adds other users for additional trust
+- Cert creation can be built into the OS
+	- part of Windows Domain services
+	- 3rd-party linux options
+
+Whats' in a digital cert?
+- https://youtu.be/3yuad7_bszE?t=194
+
+Certificate extensions
+- add more info, extend the functionality and use
+- standard extensions
+	- https://youtu.be/3yuad7_bszE?t=223
+
+Commercial CA's
+- built-in browsers
+- purchase your website cert
+	- will be trusted by everyones browser
+- create a key pair, send the public key to the CA to be signed
+	- a cert signing request (CSR)
+- may provide different levels of trust and additional features
+	- add new "tag" to your web site
+
+Private CA's
+- build it in-house
+- your devices must trust the internal CA
+- needed for medium-to-large orgs
+	- many web servers and privacy requirements
+- implement as part of your overall computing strategy
+	- Windows Certificate Services, OpenCA
+
+PKI trust relationships
+- single CA
+	- everyone receives their certs from one authority
+- Hierarchical
+	- single CA issues certs to intermediate CAs
+	- distribute cert management load
+	- easier to deal with revocation of an intermediate CA than the root CA
+- Mesh
+	- cross-certifying CAs, doesn't scale well
+- Web-of-trust
+	- alternative to traditional PKI
+- Mutual Authentication
+	- server authenticates to the client and the client auth to the server
+
+Key revocation
+- Certificate Revocation List (CRL)
+	- maintained by CA
+- different reasons
+
+Getting revocation details to the browser
+- OCSP (Online Certificate Status Protocol)
+	- browser can check cert revocation
+- messages usually send via HTTP
+- not all browsers/apps support OCSP
+	- early IE versions did not support
+	- some support, but don't bother checking
+
+---
+
+PKI Concepts
+
+Online and offline CAs
+- compromised CA
+	- bad thing, no certs issued by that CA can be trusted
+- dristribute the load
+	- then take root CA offline and protect it
+
+OCSP stapling
+- provides scalability for OCSP checks
+- CA is responsible for responding to all client OCSP requests
+- instead have cert holder verify their own status
+	- status info is stored on certs holders server
+- OCSP status is "stapled" into the SSL/TLS handshake
+	- digitally signed by CA
+
+Pinning
+- communicating over TLS/SSL to a server
+- "pin" the expected cert or public key to an app
+	- compiled in the app or added at first run
+- if the expected cert/public key doesn't match, app can shutdown, show a message etc..
+
+Key escrow
+- someone else holds your decryption keys
+- can be legit business arrangement
+	- gov agencies may need to decrypt partner data
+- need clear process and procedures
+	- keys are important
+- must trust 3rd-party
+- carefully controlled conditions
+	- legal proceedings and court orders
+
+Certificate chaining
+- chain of trust
+	- list of the certs between the server and the root CA
+- chain starts with the SSL cert
+	- and ends with the Root CA cert
+- any cert between is a chain cert or intermediate cert
+- web server needs to be configured with the proper chain
+	- or end user may receive error
+
+---
+
+Types of Certificates
+
+Root certificate
+- public key cert that identifies the root CA
+	- everything starts with this cert
+- root cert issues other certs
+	- intermediate CA certs, any other cert
+- very important cert
+	- take all sec precautions
+	- access to root cert allows for creation of any trusted cert
+
+Web server SSL cert
+- Domain validation cert (DV)
+	- owner of the cert has some control over a DNS domain
+- Extended validation certificate (EV)
+	- additional checks verified certs owners identity
+	- green name on address bar
+- Subject Alternative name (SAN)
+	- extension to an X.509 cert
+	- list additional identification info
+	- allows cert to support many diff domains
+	- wildcard domain
+		- cert based on the name
+		- will apply to all *.something.com
+
+Self-signed cert
+- internal certs dont need to be signed by CA
+- your org is the only one using it
+- no need to purchase trust
+- build your own CA
+	- issue own certs signed by own CA
+- install CA cert/truested chain on all devices
+	- devices will trust certs signed by your internal CA
+	- works like purchased cert
+
+Machine and computer certs
+- how to authenticate a device?
+	- put a cert on the device that you signed
+- other business processes rely on the cert
+	- VPN connection
+	- management software can validate the end device
+
+User certs
+- electronic "id card"
+- use as additional authentication factor
+	- limit access without the cert
+- integrate onto smart cards
+	- use as both physical and digital access card
+
+Email cert
+- use cryptography in an email platform, need public key crypto
+- encrypting emails, use recipients public key to encrypt
+- receiving encrypted emails, use your private key to decrypt
+- digital signatures
+	- digitally sign email
+	- non-repudiation, integrity
+
+Code signing cert
+- devs can provide level of trust
+	- app signed by dev
+- users OS will examine the signature
+	- validates that sw has not been modified
+- from trusted entity?
+	- user will have opportunity to stop the app execution
+
+---
+
+Certificate File Formats
+
+X.509 digital cert
+- standardized
+- format of the actual cert file can be in many different forms
+- can convert between of the formats
+- use openssl or a similiar app to view cert contents
+
+DER (Distinguished Encoding Rules)
+- format designed to transfer syntax for data structures
+- specific encoding format
+- perfect for X.509 cert
+- binary format, not human-readable
+- common, used across many platforms, often used with Jave certs
+
+PEM (Privace-Enhanced Mail)
+- common, generally the format provided by CAs
+- ASCII format, easy to email and read
+
+PKCS #12
+- Public Key Cryptography Standards #12
+- Personal Information Exchange Syntax Standard
+	- dev by RSA Security, now RFC standard
+- container format for many certs
+	- store many X.509 certs in a single .p12 file
+	- often used to transfer private/public key pair
+	- can be pw protected
+- extended from MS .pfx format
+	- two standard are familiar
+	- often referenced interchangeably
+
+CER (certificate)
+- primarily a windows X.509 file extension
+	- can be encoded as binary DER or ASCII PEM format
+- usually contains public key
+	- private key would be transferred in the .pfx file format
+- common format for windows certs
+	- look for the .cer extensions
+
+PKCS #7
+- Public Key Cryptography Standards #7
+- .p7b file
+- ASCII format, readable
+- contains certs and chaing certs
+	- private keys not included in .p7b file
+- wide platform support, MS, Jave Tomcat
+
+
+
+
+
+
