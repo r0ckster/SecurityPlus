@@ -1,0 +1,346 @@
+5.5 FORENSICS
+
+Gathering Forensics Data
+
+Forensic procedures
+- Collect and protect info relating to intrusion
+- standard digital forensic process
+	- acquisition, analysis, reporting
+- detail oriented, extensive notes
+
+Order of volatility
+- some media is much more volatile (CPU cahce vs Archival media)
+- gather data in order from most to less volatile
+
+Chain of custody
+- control evidence, maintain integrity
+- everyone who contacts the evidence, avoid tampering (use hashes)
+- label and catalog, seal and store
+
+Legal hold
+- legal technique to preserve relevant info
+	- prepare for impending litigation
+	- initiated by legal counsel
+- hold notification
+	- records custodians instructed to preserve data
+- separate repo for ESI (electronically stored info)
+- ongoing preservation
+	- once notified, ongoing obligation to preserve data
+
+Capture system image
+- copy contents of a disk
+	- bit-for-bit, byte-for-byte
+	- get every morsel of info
+- sw imaging tools, use bootable device
+- remove the physical drive
+	- use hw write-blocker
+- get backup tapes
+
+Network traffic and logs
+- FW, lot of info
+- switch/router don't usually log user-lvl info
+- IPS, traffic patterns
+- raw network traffic data
+	- stream-to-disk
+	- rebuild images, emails, browser sessions, file transfers
+
+Capture video
+- moving record of the event
+- capture status of the screen and volatile info (mobile phone)
+- security cameras and your phone
+- video content must also be archived, may be important
+
+Recording time offsets
+- document local device settings
+- different file systems store timestamps differently
+- record time offset from the OS
+
+Take hashes
+- to avoid tampering
+- MD5 (Message Digest 5)
+	- 128 bits
+- CRC (Cyclical Redundancy Check)
+	- 32 bits
+- Create MD5 hash for image, file...
+	- data can be verified
+
+Screenshots
+- difficult to reproduce
+- external capture, camera/phone
+- internal capture, printscreen
+
+Witnesses
+- who might have seen this?
+- interview and document, be quick
+- not 100% accurate
+
+---
+
+Using Forensics Data
+
+Preservation
+- lot of data, important for investigation
+- may be future investigation, revisit incidents
+- new items may be discovered
+
+Recovery
+- strategic intelligence
+	- collect and process info
+	- base sec policy changes on this 
+- counterintelligence gathering
+	- what we know about attacker?
+	- learn habits
+- active logging
+	- log everything, everywhere
+	- track attackers steps
+
+Track man hours and expenses
+- some incidents can use massive resources
+	- all at once
+- may impact the bottom line
+- may be req for restitution (be accurate)
+
+---
+
+
+5.6 DISASTER RECOVERY
+
+Disaster Recovery Sites
+
+Cold site
+- no hw, empty building
+- no data, no pepople
+
+Warm site
+- somewhere between cold/hot
+- bring the hw OR hw is ready, bring data
+
+Hot site
+- exact replica, everything duplicated
+- constantly updated, you buy 2 of everything
+- apps/sw constantly updated, automated replication
+- flip a switch and everything moves
+
+---
+
+Application Recovery
+
+Order of restoration
+- some more important than others, client-facing etc.
+- list should be defined by management
+- order may change based on calendar
+
+Backup strategies
+- tape, disk, optical
+- db backups: replication, online dublicates
+	- online backups, specialized for db
+- email db backups: provide server, db, mailxob or msg backup/restore
+- snapshots: OS volume or hypervisor
+- system backups: bare metal backup using images
+
+File backups
+- the archive attribut: set when a file is modified
+- full: everything, you'll want this first
+- incremental: all files changed since the last incremental backup
+- differential: all files changed since tha last full bu
+
+---
+
+Geographic Considerations
+
+Selecting offiste recovery options
+- your building can be the disaster: fire,flood, tornado
+- hedge your bets by keeping data offsite
+- recovery site can host you in different location
+	- get up running quickly
+
+Off-site backups
+- vaulting
+	- send BU data outside storage facility
+	- E-vaulting - send data electronically
+- org-owned or 3rd-party, usually secure
+- BUs req extensive protection, data loss/theft is concern
+- many compliance mandates (SOX, HIPAA, FISMA)
+
+Distance
+- balancing act, recovery vs accessibility
+- rec site should be outside scope of disaster, but close enough
+
+Location selection
+- legal implications
+- business regulations vary
+- refer to your legal team
+- data sovereignty, where is your data stored? Subject to that countrys laws
+
+---
+
+Continuity of Operations
+
+Tabletop exercises
+- full scale disaster drill costly and time consuming
+- many of the logistics can be determined through analysis
+- key players together for tabletop exercise, simulate disaster
+
+The scope of tabletop exercie
+- decide complexity, inhouse or local first responders?
+- scope of disaster, water break or death?
+- involve everyone, make a suprise
+- exercise should find the gaps
+
+After-action reports (AAR)
+- exercise scope and obj
+- methodology, detailed explanation of the exercise
+- what worked, what not?
+- next steps, update procedures
+
+Failover
+- recovery site is prepped, data in sync
+- business failover to alt processing site
+- revert back to primary location, process must be documented for both directions
+
+Alternate business practices
+- not everything goes like planned
+- we rely on computer systems, needs to be alternative
+	- manual transaction, paper receipts, phone calls
+- must be documented
+
+---
+
+
+5.7 Security Controls
+
+- Many diff sec risks/types
+- assets vary: data, property, computer systems
+- sec controls prevent sec events, minimize impact, limit damage
+
+Control types
+- Technical control type
+	- controls implemented using systmes, OS controls
+- Administrative
+	- determine how people act, sec policies, standard operating procedures
+- Physical
+	- Fences, locks, mantraps, real-world sec
+
+Security controls
+- Deterrent
+	- may not prevent but discourages, warnings
+- Preventive
+	- physically control access, lock, FW
+- Detective
+	- may not prevent access, motion sensor, IDS/IPS
+- Compensating
+	- doesn't prevent attack, restores, hot-site, bu power system
+- Corrective
+	- designed to mitigate dmg, IPS can block, BU can mitigate ransomware
+
+---
+
+
+5.8 DATA SECURITY AND PRIVACY
+
+Data Destruction
+
+Data Destruction and media sanitization
+- disposal becomes legal issue, some info must not be destroyed
+- no critical info to the trash (dumpster dive)
+- reuse the storage media, sanitize before, ensure nothing left
+
+Protect your rubbish
+- secure garbage, fence and lock
+- shred documents, burning better
+- pulp the paper, large washing tank to remove ink > paper recycled
+
+Physical destruction
+- shredder / pulverizer
+	- heavy machinery, complete destruction
+- Drill/hammer, quick and easy
+- Electromagnetic (degaussing)
+	- remove the magnetic field, destroys the drive data and electronics
+	- Incineration, fire
+
+Certificate of destruction
+- destruction often done by 3rd party
+- need verification that data is destroyed
+- paper trail of broken data, know exactly what happened
+
+Sanitizing media
+- purge data: remove it from existing data store, delete some of db
+- wipe data
+	- unrecoverable removal of data
+	- usually overwrites data storage locations
+	- useful when need to reuse media
+
+Data security
+- don't fully trust 3rd-parties
+- file level overwriting
+	- Sdelete - windows sysinternals
+- whole drive wipe secure data removal
+	- DBAN - Dariks Boot and Nuke
+- Physical drive destruction
+	- one-off or industrial removal and destroy
+
+---
+
+Handling Sensitive Data
+
+- not all data has same lvl of sensitivity
+	- license tag numbers vs health records
+- diff lvl req diff security and handling
+	- additional permissions
+	- diff process to view
+	- restricted network access
+
+Data sensitivity labels
+- public / unclassified
+	- no restrictions
+- Private / Classified / Restriced / Internal use only
+	- restricted access, may req NDA
+- Confidential
+	- very sensitive, must be approved to view
+
+Sensitive data types
+- Proprietary
+	- property of orgs
+	- may inclued trade secrets
+	- often data uniq to org
+- PII - Personally Identifiable Information
+	- name, date of birth, biometric info...
+- PHI - Protected Health Information
+	- health status, care recodes...
+
+---
+
+Data Roles and Retention
+
+Data roles
+- high-lvl data relationships
+	- organizational responsibilities, not always technical
+- data owner
+	- accountable of specific data, often senior offices
+	- VP of Sales owns customer relationship data etc.
+- data steward
+	- responsible for data accuracy, privacy and sec
+	- associates sensitivity labels to data
+	- ensures compliance with laws and standards
+- data custodian
+	- manages access rights to data
+	- implements sec controls
+	- sometimes same person as steward
+- Privacy offices
+	- responsible for orgs data privacy
+	- sets policies, implements processes and procedures
+
+Data retention
+- keep files that change freq for version control
+	- files change often, keep BU like a week
+- recover from virus infection
+	- infection may not be identififed immediately
+	- may need to retain 30 days of BU
+- consider legal req for data retention
+	- email storage may be req over years
+	- some industries must legally store certain data types
+	- diff data types, diff storage req
+		- corp tax info, customer PII, tape backups...
+
+---
+
