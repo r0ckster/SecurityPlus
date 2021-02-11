@@ -1,0 +1,341 @@
+6.1 Cryptography
+
+Cryptographic Concepts
+
+Cryptography
+- greek: kryptos. Hidden,secret
+- condifentiality
+- authentication and access control
+- non-repudiation, you said it - can't deny it
+- integrity, tamper-proof
+
+Terms
+- plaintext, an unencrypted message (in the clear)
+- ciphertext, encrypted message
+- cipher, algorithm used to encrypt/decrypt
+- cryptanalysis
+	- art of cracking encryption
+	- researchers trying to find weakness in cipher
+	- mathematically flawed cipher bad for everyone
+
+Cryptographic keys
+- add the key to the cypher to encrypt
+- larger keys more secure
+- some encryption use only 1 key, some more
+
+Confusion
+- encryption is based on confusion and diffusion
+- encrypted data drastically different than the plaintext
+- process should be non-linear, no discernible patterns
+
+Diffusion
+- change one character of input, and many characters change of the output
+
+Sec through obscurity
+- sec should exist even if hacker knows everything about the system
+- secrecy of design shouldn't be the main method of sec
+- encryption key would be the only unknown
+- Substitution Cipher (Caesar cipher)
+	- substitute one letter with another
+- if you know how sec is designed, you can circumvent it (SSID hide, MAC filter)
+
+Random numbers
+- crypto relies on randomness
+	- used to gen keys, salt hashes...
+- rng
+	- difficult to create true randomness with program
+	- usually includes natural input (mouse movement, noise etc.)
+- pseudo-randomness doesn't rely on the natural world
+	- approximate true randomness, based on a starting seed
+
+App development and cryptography
+- devs dont need to be cryptographers
+	- they write to an API (application programming interface)
+	- crypto modules
+- the API library does heavy lifting
+	- send plaintext, get ciphertext back, no extra programming req
+- Windows sw library is Cryptographic Service Provider (CSP)
+	- MS CryptoAPI is the bridge between app and CSP
+
+---
+
+Symmetric and Asymmetric Encryption
+
+Symmetric
+- single, shared key, encrypt/decrypt with the key
+- if it gets out, you need another
+- secret key algorithm, shared secret
+- doesn't scale well, challgenging to distribute
+- fast to use
+	- less overhead vs asymmetric
+	- often combined with asymmetric
+
+Asymmetric
+- public key cryptography
+	- 2 or more amthematically related keys
+- private key
+- public key, anyone can see this key
+- private key is the only key that can decrypt data encrypted with the public key
+	- you can't derive the private key from the public key
+
+Key pair
+- asymmetric encryption
+- public key encryption
+- key generation
+	- build both public and private key at the same time
+	- lots of randomization
+	- large prime numbers, lots of math
+
+Symmetric key from asymmetric keys
+- use public and private key cryptography to create symmetric key
+
+Elliptic curve cryptography (ECC)
+- asymmetric encryption need large integers composed of two or more large prime factors
+- instead of numbers, use curves
+	- uses smaller keys than non-ECC asymmetric encryption
+	- smaller storage and transmission req
+	- perfect for mobile devices
+
+---
+
+Hashing and Digital Signatures
+
+Hashes
+- represent data as a short string of text, message digest
+- one-way trip
+	- impossible to recover original message from digest
+	- used to store pw/confidentiality
+- verify downloaded documents, integrity
+- can be a digital signature (authentication, non-repudiation, integrity)
+- no collision (hopefully)
+
+Digital signatures
+- prove the message was not changed, integrity
+- prove the source, authentication
+- make sure the signature isn't fake, non-repudiation
+- sign with private key
+	- this msg doen't need to be encrypted
+	- nobody else can sign this (obviously)
+- verify with public key
+	- any change in the message will invalidate the signature
+
+---
+
+Randomizing Cryptography
+
+Cryptographic nonce
+- arbitrary number
+	- used once
+	- "for the nonce" - for the time being
+- a random or pseudo-random number
+	- something that can't be reasonably guessed
+	- can also be a counter
+- use nonce during login process
+	- server gives you a nonce
+	- calculate your pw hash using nonce
+	- each pw sent to hos will be different, so replay attack won't work
+
+Intialization Vectors
+- type of nonce
+	- used for randomizing an encryption scheme
+	- more random the better
+- used in encryption ciphers, WEP, and older SSL implementations
+
+Salt
+- nonce most commonly associated with pw randomization
+- make the pw hash unpredictable
+- pw storage should always be salted
+	- each user get a different salt
+- if pw db is breached, you can't correlate any pws
+	- even users with same pw have different hashed stored
+
+---
+
+Weak Encryption
+
+- practically everything can be brute forced
+	- try every possible key
+- strong algorithms have been around for a while
+	- that's why they are strong
+	- Wired Equivalent Privacy (WEP) had design flaws
+- strong algorithms
+	- PGP (Pretty Good Privacy), AES (Advanced Encryption Standard)
+- weak
+	- WEP, DES
+
+Give weak keys a workout
+- make a weak key stronger by performing multiple processes
+	- hash a pw, hash the hash of the pw, and so on
+	- key stretching, key strengthening
+- brute force attacks would req reversing each of those hashes
+	- takes more time, even if weak key
+
+---
+
+Cryptographic Keys
+
+- the algo is usually known entity
+- the only this you don't know is the key
+- key determines the output
+	- encrypted data, hash value, digital signature
+- keep key private, only thing protecting your data
+
+Key strength
+- larger key > more secure
+	- prevent brute force
+- symmetric encryption
+	- 128-bit or larger keys are common
+	- these numbers get larger as time goes on
+- asymmetric encryption
+	- complex calculations of prime numbers
+	- larger than symmetric encryption
+	- common to see 3072 bits or larger
+
+Key exchange
+- logistical challenge
+- out-of-band key exchange
+	- telephone, courier, in-person
+- In-band key excahnge
+	- on the network
+	- protect with additional encryption	
+	- use asymmetrci encryption to deliver symm key
+
+Real-time encryption/decryption
+- need for a fast security, without compromising
+- share symmetric key using asymmetric encryption
+	- client encrypts random (symmetric) key with servers public key
+	- server decrypts this shared key and uses it to encrypt data
+	- this is the session key
+- implement session keys carefully
+	- need to be changed often (ephermal keys)
+	- need to be unpredictable
+
+---
+
+Steganography
+
+Obfuscation
+- process of making something unclear
+- but not impossible to understand, if you know how to read it
+- make source code difficult to read, doesn't change the functionality
+- hide info inside image (staganography)
+
+staganography
+- greek for concealed writing, sec through obscurity
+- message is invisible, but is there
+- network based, embed msgs in TCP packets
+- image
+- invisible watermakrs, yellow dots on printers
+
+---
+
+Stream and Block Ciphers
+
+Stream ciphers
+- encryption is done one bit/byte at time
+	- high speed, low hw complexity
+- used with symmetrci encryption (not with asymmetric)
+- starting state should never be the same twice
+	- key often combined with an intialization vector
+
+Block ciphers
+- encrypt fixed-lenght groups
+	- often 64 or 128-bit blocks
+	- pad added to short blocks
+	- each block is encrypted/decrypted independently
+- symmetric encryption, similiar to stream ciphers
+- block cipher modes of operation
+	- avoid patterns in the encryption
+	- many different modes to choose from
+
+---
+
+States of Data
+
+Data in-transit
+- data in-motion, transmitted over the network
+- not much protection as it travels (switch, router, devices)
+- network-based protection: FW, IPS
+- Provide transport encryption
+	- TLS (Transport Layer Security)
+	- IPsec (Internet Protocol Security)
+
+Data at-rest
+- data on storage device (ssd, hdd, flash)
+- encrypt the data
+	- whole disk encryption
+	- db encryption
+	- file/folder-level encryption
+- apply permission, ACL
+	- only authorized users can access data
+
+Data in-use
+- data is in memory (ram, cpu, cache)
+- data almost always decrypted
+- hacker can pick info out of RAM
+
+
+---
+
+Perfect Forward Secrecy
+
+Traditional web server encryption
+- SSL/TLS uses encryption keys to protect web server comms
+	- traditionally based on web servers RSA key pair
+	- one key that encrypts all symmetric keys
+- this servers private key can rebuild everything
+	- if you capture traffic > can decrypt
+- one point of failure for all your web site encryption
+
+PFS - Perfect Forward Secrecy
+- change the method of key exchange
+	- dont use servers private RSA key
+- Elliptic or Diffie-Hellman ephemeral
+	- sessions keys arent kept around
+- cant decrypt with private server key (every sessions uses diff key)
+- PFS req more cpu power
+- browser must support PFS
+
+---
+
+Common Cryptography Use Cases
+
+Finding the balance
+- low power devices
+- smaller symmetric key sizes
+- use elliptic curve crypto (ECC) for asymmetric encryption
+- low latency
+	- fast computation time
+	- symmetric encryption, smaller key sizes
+- high resiliency
+	- larger key sizes
+	- encryption algorithm quality
+	- hashing provides data integrity
+
+Use cases
+- Confidentiality
+	- secrecy and privacy
+	- encryption (file-level, drive-lvl, email)
+- Integrity
+	- prevent data modification
+	- validate contents with hashes
+- Obfuscation
+	- modern malware
+	- encrypted data hides the active malware code
+	- decryption occurs during execution
+- Authentication
+	- pw hashing, protect original pw
+	- add salts to randomize stored pw hash
+- Non-Repudiation
+	- confirm authenticity of data
+	- digital signature provides integrity and non-repudiation
+- Resource vs security constraints
+	- ongoing battle
+	- browser support vs supported encryption
+	- VPN software support vs supported algorithms
+
+
+
+
+
+
