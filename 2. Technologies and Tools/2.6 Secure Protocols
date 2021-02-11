@@ -1,0 +1,80 @@
+Voice and video
+- SRTP - secure real-time transport protocol / Secure RTP
+- encryption, uses AES
+- auth, integrity and replay protection
+	- HMAC-SHA1 - hash-based message auth code using SHA1
+
+Time syncing
+- NTP has no sec features
+	- exploited as amplifiers in DDoS attacks
+-NTPsec, secure time protocol
+
+Email
+- S/MIME - Secure/Multipurpose Internet Mail Extensions
+- public key encryption and digital signing
+- secure POP and IMAP
+	- use STARTTLS extension, to use SSL
+- SSL/TLS
+	- if mail is browser based
+
+Web
+-SSL/TLS (Secure Sockets Layer/ Transport Layer Security)
+-uses public key encryption
+	- private key on the server
+	- symmetric session key trasferred using asymmetric encryption
+	- sec and speed
+
+File transfer
+- FTPS
+	- FTP over SSL, File Trasfer Protocol Secure
+	- this is not SFTP
+- SFTP
+	- SSH File Transfer Protocol
+	- provides file system functionality, resume interrupted transfers, dir list, remote file removal
+
+LDAP (Lightweight Directory Access Protocol)
+- protocol for reading/writing directories over an IP network
+- X.500 written by ITU - International Telecom Union
+ - used in Win AD, Apple OpenDirectory, OpenLDAP etc.
+
+LDAPS (LDAP Secure)
+- non-standard implementation of LDAP over SSL
+SASL (Simple Authentication and Security Layer)
+- provides auth using many diff methods, i.e. Kerberos or client cert
+
+
+DNS - Domain Name Resolution
+- no security, easy to poison
+- DNSSEC- DNS Security Extension
+	- validate DNS responses (origin auth, data integrity)	
+	- Public key cryptography
+		- dns records signed with trusted 3rd-party, published in DNS
+
+SNMPv3 - Simple Network Management Protocol version 3
+	- Confidentiality - encrypted data
+	- Integrity - No tampering of data
+	- Authentication - Verifies the source
+
+DHCP
+- no built-in sec, no sec version
+- rogue DHCP servers
+	- in AD, dhcp servers must be authorized
+	- some switch can be configured with "trusted" interface
+	- dhcp only allowed from trusted interfaces
+	- Cisco calls this DHCP Snooping
+- dhcp client DoS - starvation attack
+	- use spoofed MAC addresses to exhaust dhcp pool
+	- switch can be confed to limit the number of MAC addresses per interface
+
+Subscription services
+- Automated subscriptions
+- AV, IPS, FW signature updates
+- constant updates, different methods
+- Check for encryption and integrity checks
+	- may req additional public key conf
+	- set up trust relationship (certs, IPs)
+
+
+
+
+
