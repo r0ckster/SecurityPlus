@@ -1,0 +1,489 @@
+3.1 SECURITY FRAMEWORKS
+
+
+Compliance and Frameworks
+
+Compliance
+- meeting standard of laws, policies and regulations
+- catalog of rules, many industry-specific
+- penalties (fines, incarceration, loss of employment)
+- domestic and international req
+
+Regulatory
+- Sarbanes-Oxley Act (SOX)
+	- The Public Company Accounting reform and Investor Protection Act of 2002
+- The Health Insurance Protability and Accountability Act (HIPAA)
+	- Extensive healthcare standard on health care info
+
+Non-regulatory
+- no law, strongly suggested, law maybe coming
+- AV signature sharing, malicious IP sharing
+
+Frameworks
+- structure and organization, process management, best practices (guidelines, cost effective), training
+
+Industry-specific frameworks
+-ITIL (Information Technology Infrastructure Library)
+-multiple stages of the IT lifecycle
+-service design, transition, operation, strategy, improvement
+
+---
+
+Secure Configuration Guides
+
+-default confs usually not secure
+-hardening guides to softwares or platforms
+
+Web server hardening
+-Apache, IIS (MS Internet Information Server)
+-data leaks, server access
+-info leakage: banner, directory browsing
+-permissions: run from non-admin account, conf file permissions
+-SSL: manage and install certs
+-monitor access and error logs
+
+OS hardening
+-updates: service packs, sec patches
+-user accounts: min pw lengt/complexity, limitations
+-network access/sec: limit access
+-monitor and secure: av
+
+Application server
+-programming languages, runtime libraries etc.
+-usually between web server and db
+-middleware
+-very specific functionality (disable unnecessary services)
+-sec patches, file permissions and access controls
+
+Network infrastructure devices
+- switches, routers, FWs, IPS etc.
+- purpose built device, embedded OS
+- conf authentication (dont use defaults)
+- check with manufacturer: sec updates important
+
+---
+
+Defense-in-Depth
+
+Layering the defence
+-physical controls: fences, locks, cameras
+-technical controls: hw/software,  FW, AD, auth, disk encrpt
+-admin controls: policies/procedures, backup media handling
+
+-FW, DMZ, Hashing/salting PW, Authentication, IPS/IDS, VPN, card/badge, AV, sec guard
+
+-------
+
+
+
+3.2 SECURING THE NETWORK
+
+SECURE NETWORK TOPOLOGIES
+
+DMZ (Demilitarized zone)
+- layer of sec between inet and you
+- public access to public resources
+
+Extranet
+- private network for partners (vendors, suppliers)0
+- authentication required
+
+Intranet
+- Private network, only internally
+- company announcements, important documents, employees only
+- no external access, internal/VPN only
+
+Wireless networking
+- separate network for guests
+- user auth to internal wireless network
+- 802.1X standard
+- no shared PW for internal wireless
+
+Guest network
+- no access to internal network, only inet
+- captive portal
+
+Ad hoc
+- AirDrop, contact sharing apps
+- difficult to control unmanaged devices
+- implemetn access control
+
+Honeypots and honeynets
+- single-use/system traps or many honeypots on a network
+
+NAT - Network Address Translation
+- IPv4 supports aroun 4.29 billion addresses
+- IPv4 exhausted
+- not security mechanism, no protection, security through obscurity
+- can circumvent unprotected NAT (attacks assume NAT is there)
+- stateful FW in conjunction with NAT to provide sec
+
+---
+
+Network Segmentation
+
+-Physical, logical, virtual segmentation
+	- devices, vlans, virtual networks
+- performance
+- security, only apps in core are SQL/SSH, users not directly talking to DB servers
+- compliance, mandated segmentation, change control easier
+
+Physical segmentation
+- devices physically separate, switch/customer A and B
+- must be connected to provide comms
+
+Logical segmentation with VLANs
+- Virtual Local Area Networks
+- separated logically, not physically
+- cannot communicate between VLANs without layer 3 device
+
+Virtualization
+- all devices virtualized
+- instant and complete control
+	- build new network, route between IP subnets, drop FW between, drag/drop devices between networks
+
+Air gaps
+- one step farther vs physical segmentation
+- remove any conncetivity between components (no shared components)
+- Network separation, Industrial systems (SCADA, manufacturing)
+- some tech can jump the gap (removable media)
+
+---
+
+VPN technologies
+
+Site-to-Site VPNs
+- encrypt traffic between sites, through public Inet
+- use existing Inet connection, with VPN appliances
+
+Host-to-Site VPNs
+- also called "remote access VPN"
+- req software on user device (may be built-in OS)
+
+Host-to-Host VPNs
+- user to user encryption, software based, no hw needed
+
+---
+
+Security Technology Placement
+
+Sensors and collectors
+- gather info from network devices
+- built-in sensors, separate devices
+- integrated to switch, router, server, FW etc.
+
+Sensors
+- IPS, FW, DB, auth, web server access logs
+
+Collectors
+- Proprietary consoles (IPS,FW), SIEM, syslog servers
+
+Filters and FWs
+- packet filters
+	- simple data blocks - ingores state
+	- linux iptables - filter apckets in the kernel
+	- usually placed on device/server
+- FWs
+	- state based
+	- advanced filtering (IP,port,app,content)
+	- usually on ingress/egress of network
+	- some between internal networks
+
+Proxy servers
+- intermediate server
+- performs request for user and provides results back to client 
+- access control, caching, url filtering, content scanning
+
+Forward proxy
+- protect users from Inet
+
+VPN concentrators
+- VPN appliance usually located on the edge of network (internet-facing)
+
+SSL accelerators
+- SSL handshake requires CPU power, offload to HW like Load balancer
+
+Load balancers
+- manage load across multiple devices
+- performs constant health checks
+
+DDoS mitigation
+- resist DDoD, minize impact
+- Cloud-based, inet provider or reverse proxy service
+- On-site tools, DDoS filtering in FW/IPS
+- positioned between you and the internet
+
+Aggregation switches
+- core <> distribution and aggregation <> access
+
+Taps and port mirrors
+- intercept network traffic, send copy to packet capture device
+- physical tap: disconnect link, put tap in middle
+- can be active or passive tap
+- port mirror
+	- port redirection, SPAN (Switched Port ANalyzer)
+	- software-based tap
+
+---
+
+Securing SDN
+
+Software Defined Networking
+- networking devices have 2 functional planes of operation
+	- control plane, data plane
+- directly programmable: configuration different than forwarding
+- agile: changes can be made dynamically
+- centrally managed: global view, single console
+- programmatically configured: orchestration, no human intervention
+- open standards / vendor netural : standard interface to the network
+
+---
+
+
+3.3 SECURE SYSTEMS DESIGN
+
+
+Hardware Security
+
+Full Disk Encryption (FDE) - bitlocker, luks
+- encrypt entire drive, OS too, data always protected
+
+TPM - Trusted Platform Module
+- hw to help with encryption stuff
+- cryptographic processor: rng, key generators
+- persisten memory: uniq keys burned in
+- versatile memory: sotrage keys, hw conf info 
+- pw protected: no dictionary attacks
+
+HSM - Hardware Security Module
+- high-end cryptographic hw - plug in card or hw device
+- key backup, crypto accelerator
+
+Hardware root of trust
+- security is based on trust: data safely encrypted? web site legit?
+- trust has to start somewhere: TPM,HSM > root of trus
+- difficult to change or avoid, wont work without hw
+
+UEFI BIOS
+- Unified Extensible Firmware Interface
+- based on Intels EFI
+- defined standard, designed to replace legacy BIOS
+
+Secure boot
+- malicious software can "own" your system
+- parf of the UEFI
+- digitally sign known-good software
+	- won't run without proper signature
+- support in many OS: win, linux, Apple's own EFI
+
+Remote attestation
+- nothing on workstation has changed? HW/Software
+- device reports operational report to verification server
+- encrypted/signed with TPM
+- changes identified and managed before OS booted
+
+Supply chain
+- Some Cisco routers were infected with modified firmware with backdoor access
+- use trusted vendors, critical devices should not be connected to the outside and hw needs bo verified
+
+EMI/EMP
+- Electromagnetic interference / pulse
+- EMI leakage: determine data streams based on EMI emissions, keyboards, HDD, network connections
+- modify security by injectin EMI, change sensor data and other input
+- shielding against EMP important for national sec and infrastr
+
+---
+
+Operating System Security
+
+-Network
+	-supports servers, workstations, other network connected dev
+-Server: web, db server
+-Workstation: optimized for user apps: email, browsing, office
+-Appliance: purpose-built, minimal OS, often unseen
+-Kiosk: public device, OS tightly locked
+-MobileOS: optimized for mobile hw
+
+Patch management
+-system stability, sec fixes
+-service packs, all at once
+-monthly updates, incremental
+-emergency out-of-band updates: 0-day and high sec discoveries
+
+Update options
+-Windows update
+-WSUS - Windows server update services - centralized mngmt
+-MacOS App store
+-Linux: many options: yum,apt-get,rpm, gui
+
+The patching process
+- not always seamless, takes planning
+- may introduce problems
+- don't have to install every single patch
+- often centrally managed, test all your apps, then deploy, manage bandwidth
+
+Disabling unnecessary services
+- every service potential for trouble, like 0-day
+- not always obvious, win10 has over 240 by default
+- takes time, trial and error, monitoring
+
+Least functionality
+- limit OS to only what's needed
+- every function is potential sec risk
+- depending on use: shipping vs IT dev vs Kios
+- extensive confs: disable printer, ability to change, log on as a service
+
+Secure configurations
+- fine tuning of OS
+- secure conf policies
+	- stay updated with latest patches
+	- compromised are re-imaged
+	- changes go trhough change management
+	- regular integrity checks
+
+Evaluation Assurance Level
+- Common Criteria for Information Technology Security Evaluation
+- also called as Common Criteria (CC)
+- Evaluation Assurance Level (EAL) 1-7
+- trusted operating system is EAL compliant (4 minimum accepted)
+
+Application whitelisting/blacklisting
+- any app can be malicious
+- security policy can control app execution
+- whitelisting: nothing runs unless approved
+- blacklisting: nothing on list can execute
+- decisions made in OS
+	- app hash, cert, path, network zone
+
+Disabling unnecessary accounts
+- all OS include other accs
+	- guest, root, mail, etc.
+- disable unnecessary/interactive logins
+
+---
+
+Peripheral Security
+
+Wireless kb/mouse
+- many communicate in clear, 2.4GHz
+- easy to capture keystrokes with a receiver
+- or inject keystroker and control remotely
+- some kb support AES encryption
+
+Displays
+- electromagnetic radiation
+- view info on a screen by eavesdropping EM signals
+- internal signals of laptop or cable, through walls
+- firmware hacks
+	- many displays have nos sec for firmw upgrades
+
+Wifi-enabled microSD cards
+- SD card auth vulns
+- predictable access, easy to read files overe wifi
+- API access to SD card
+	- can result in data leakage/loss if no strong sec
+
+Printers/multi-funcion devices
+- printer, scanner, fax, network connectivity, local storage
+- reconnaissance, log files for activity, address books
+- unauthorized access
+- gather info, capture spool file
+
+External storage devices
+- limited auth, always use file/volume encryption
+- often used to exfiltration of data
+
+Digital cameras
+- camera firmware can be compromised, like security camera
+
+---
+
+
+3.4 SECURE DEPLOYMENTS
+
+Development to production
+- Patch tuesday, like in Windows
+- manage the process, safely move from non-prod to production 
+
+Sandboxing
+- isolated testing environment
+- safe space, no connection to real world or production system
+- try some code, break some code
+- incremental development, helps build the app
+
+Working environments
+- development
+	- secure, writing code, devs test in their sandboxes
+Test
+- still in development state, all pieces put togethers, works?
+- functional tests, QA testing
+- if ok here > ready for staging
+Staging
+- copy of production, run perf/usability tests, 
+Production
+- app is live to user community
+
+Secure baselines
+- sec of app environment well defined
+- all app instances must follow baseline
+- FW settings, patch levels, OS file versions
+- may req constant updates
+- Integrity measurements check for sec baseline
+	- often, chack against well-documented baselines, failure req correction
+
+----
+
+
+3.5 EMBEDDED SYSTEMS
+
+SCADA / ICS
+- Supervisory Control and Data Acquisition System
+	- large-scale, multi-site Industrial Control Systems (ICS)
+- PC manages equipment: power generation, refining, manfacturin eqp
+- distributed control systems, real-time info, system control
+- req extensive segmentation, should be no access from outside
+
+Smart devices / IoT (Internet of Things)
+- wearable tech, track us and our location, where is that data stored
+- home automation: video doorbells, heating/cooling, inet connected
+
+HVAC (Heating, Ventilating, and Air Conditioning)
+-thermodynamics, fluid mechanics, and heat transfer
+-complex science, must be integrated into the fire system
+-pc manages: makes cooling/heating decisions for workspaces/datacenters
+-usually not built with sec in mind
+	-difficult to recover from infrastructure DoS
+
+SoC (System on a Chip)
+- multiple components running on one chip (rasbpi)
+- small form-factor
+	- external interface support, cache/flash memory, usually low power
+- sec considerations important
+	- difficult to upgrade hw
+	- limited off-the-shelf sec options
+
+RTOS (Real-Time Operating System)
+- OS with a deterministic processing schedule
+- no time to wait for other processes
+- industrial equipment, automobiles, military environments
+- extremely sensitive to sec issues
+	- non-trivial systems, need always be available, difficult to know what sec in place
+
+Printers, scanners, fax machines
+- All-in-one or multifunction devices (MFD)
+- very sophisticated firmware
+- might store images/logs locally on device
+
+Camera systems
+- video monitoring for home/office
+- IP devices > privacy concerns
+
+Special purpose
+- medical devices: heart monitors, insulin pumps, use old OS
+- vehicles: internal network often accessible from mobile network
+- control and disable engine / internal electronics
+- Aircraft / UAV (Unmanned aerial vehicle)
+- DoS could dmg the aircraft and other in ground
+
+---
+
