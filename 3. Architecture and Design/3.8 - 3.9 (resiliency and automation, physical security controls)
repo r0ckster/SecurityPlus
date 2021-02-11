@@ -1,0 +1,202 @@
+3.8 RESILIENCY AND AUTOMATION
+
+Automation and scripting
+- plan for change, implement automatically
+- many problems can be predicted, set automated responses
+- continuous monitoring
+- cloud-based technologies allow for constant change
+- automatically validate a config before going live
+- perform automated checks, vuln scans
+
+Templates
+- cloud orchestration relies on templates
+- blueprint of your online service
+- template just the start
+	- each app instance needs to be customized
+	- orchestrate with scripts and APIs
+
+Master image
+- instead of building server each time, create customized image
+- still need to make changes: ip, fw rules, license
+- master image needs to be up to date
+	- sec patches, OS/service updates
+	- can be administratively challenging
+	- can also save time
+
+Non-persistence
+- cloud always in motion
+- snapshots can capture current configuration and data
+	- preserve complete state of device or just conf
+- revert to known state
+- rollback to known configuration (dont modify data)
+- live boot media, run OS on removable media
+
+Elasticity and scalability
+-Elasticity
+	- provide resources when demand req it and scale down when not needed
+-host availability, new servers deployed 1-click
+-virtualization integrates a layer of orchestration
+	- automate deployment/movement of virtual hosts
+- servers can be added or moved to other data centers
+	- all management systems follow the servers
+
+---
+
+Redundancy, Fault Tolerance and High Availability
+
+Distributive allocation
+- need many devices t maintain application instance
+	- web servers, db servers, middleware, sec devices etc.
+- don't keep all in one place
+	- critical assets, data should be in different places
+	- easier to add sec between and segmented areas
+	- makes it more difficult to target and exploit
+
+Reduncancy and fault tolerance
+- maintain uptime, org continues to function
+- no HW failure, servers keep running
+- no sw failure, services always available
+- no system failure, network performing optimaly
+
+Redundant hw components
+- multiple devices, load balancing power supplies
+RAID
+- Redundat Array of Independent Disks
+UPS (Uninterruptible power supplies)
+- prepare for power disconnections
+Clustering
+- logical collective of servers
+Load balancing
+	- shared service load across components
+
+RAID 0 - striping without parity - high perf, no faul tolerance
+RAID 1 - mirroring - duplicates data for fault tolerance, req 2x disk space
+RAID 5 - striping with parity - fault tolerant, req additional disk for redundancy
+RAID 0+1, 1+0 5+1 etc - Multiple RAID types - combine methods to increase dedundancy
+
+High availability (HA)
+- always on, always available
+- redundancy doens't always mean always available
+- may inclued many different components working together
+- watch for single points of failure
+
+
+----
+
+3.9 PHYSICAL SECURITY CONTROLS
+
+Proper lighting
+- more light = more sec
+- non IR cam see better
+- specialized design
+	- angels (facial recognition), avoid shadows and glare
+
+Signs
+- clear and specific instrucitons, consider visitors
+- personal safety: frie exits, warning signs, medical resources
+- informational: in case of emergency, call this
+
+Fencing
+- build a permitere, trasparent or paque
+- robust, prevent climbing
+
+Rack monitoring and sec
+- environmental sensors, webcams, integration with enerprise monitoring systems
+- security: closed racks, locks, fences and gates
+
+Guards and access list
+- sec guard: physical protection, validates identification
+- ID badge, must be worn at all times
+- access list: physcial list of names, enforced by sec guard
+
+Alarms
+- Circuit-based, opened or closed
+- door window fence, useful on the perimeter
+- motion detection: radio reflection or passive infrared
+	- useful in areas not often used
+- duress: triggered by a person, big red button
+
+Safe
+- sec your hw/media: backups, laptops, hdds
+- protection against elements: fire,water
+- difficult to steal, very heavy
+- manage carefully: what happens when you lose combination
+
+Locking cabinets
+- data center hw often managed by different groups
+	- responsibility lies with the owner
+- some may need more ventilation
+
+Protected distribution System (PDS)
+- physically secured cabled network
+- all of the data flows through these conduits
+- prevents direct and inductive taps
+- prevent cable and fiber cuts, pysical DoS
+- hardened PDS
+	- sealed metal conduit, periodic visual inspection
+
+Air gap
+- physical separation between neworks (airplane, nuclear power plant)
+- most environments are shared and virtualized
+
+Faraday cage
+- blocks electromagnetic fields
+- windows of microwave oven
+- not a comprehensive solution: not all signal types are blocked
+- restricts access to mobile network: how to make emergency calls?
+
+Door access controls
+- conventional: lock/key
+- deadboldt: physical bolt
+- Electronic: keyless
+- token-based: magnetic swipe card or proximity reader
+- multi-factor: smard card and PIN
+
+Biometrics
+- authentication: fingerprint, iris, voiceprint
+- usually stores mathematical representation of your biometric
+	- actual fingerprint is not usually saved
+- difficult to change: PW vs fingerprint
+- used in very specifi situations, not foolproof
+
+Barricades / bollards
+- prevent access, channel people through a specific access point
+	- allow people, prevent cars
+- identify safety concerns and prevent injuries
+- cna be used to an extreme (concrete barriers / bollards, moats)
+
+Tokens and cards
+- smart card: integrates with devices, may req PIN
+- USB token, cert is on USB
+- HW/SW tokens: generates pseudo-random auth codes
+- your phone, SMS code
+
+HVAC (Heating, Ventilatin and Air Conditioning)
+- data center should be separate from the rest of the building
+- closed-loop recirculating and positive pressurization
+	- recycle internal air
+- Hot and cold aisles
+
+Fire suppression
+- electronics require unique responses to fire (water is bad)
+- detection: smoke, flame, heat detector
+- use water where appropriate
+- suppress with chemicals (FM-200)
+
+Cable locks
+- temporary sec, connect your hw to something solid
+- useful when mobile, most devices have a standard connector
+- not designed for long-term solution
+
+Video surveillance
+- CCTV (Closed circuit television)
+- folac length - shorter is wider angle
+- depth of field - how much is in focus
+- illumination req - see in the dark
+
+Logs
+- everything is logged
+- entering the parking area > 
+
+
+
