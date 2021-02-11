@@ -1,0 +1,129 @@
+4.3 IDENTITY AND ACCESS CONTROLS
+
+Access Control Models
+
+Authorization
+- process of ensuring only authorized rights are exercised - policy enforcement
+- process of determining rigthts - policy definiton
+- user receives rights based on Access Control models
+	- different business needs or mission requirements
+
+Mandatory Access Control (MAC)
+- OS limits the operation on an object
+	- based on security clearance levels
+- every objenct gets a label
+	- confidential, secret, top secret etc.
+- labeling of object uses predefined rules
+	- admin decides who gets access to what sec level
+	- users cannot change these settings
+
+Discretionary Access Control (DAC)
+- used in OS, familiar access control model
+- you create a spdreadsheet
+	- as owner, you control who has access
+	- you can modify access at any time
+- flexible but weak security
+
+Role-based access control (RBAC)
+- you have a role in org (manager, director, team lead..)
+- admin provides access based on the role of user
+	- rights gained impocitly insted of explicitly
+- in Win, user Groups to provide role-based access control
+	- you in shipping/receiving, can use shipping sw
+	- you manager, can alswo view shipping logs
+
+Attribute-based access control (ABAC)
+- users can have complex relationships to apps/data
+	- may be based on many different criteria
+- can consider many parameters (next-gen authorization model)
+- aware of context
+- combine/evaluate multiple parameters
+	- resource info, IP, time, action, etc.
+
+Rule-based access control
+- generic term for following urles
+- access determined through system-enforced rules by admins
+- rule associated with object, system check the ACL for that object
+- rule examples:
+	- lab network access available from 9-5
+	- only chrome may complete this web form
+
+File system security
+- part of most OS
+- access control list, group/user rights/permissions, can be centrally managed and/or user manage files they own
+- encryption can be built-in
+
+Database security
+- own type of access control (username, pw, permissions)
+- most DB support data encryption
+- data integrity usually an option
+	- no data is lost bcs of fault
+	- part of the db server operation
+- apps can provide secure front-end
+	- prevent SQL inj. and inappropriata access to data
+
+---
+
+Access Control Technologies
+
+Proximity cards
+- close range cards, contactless smart cart
+- passive device, no power in card, powered from reader
+- not a large data storage device
+	- often used as identifier which is linked to data stored elsewhere
+
+Smart cards
+- integrated circuit card, contact or contactless
+- common on credit cards, also used for access control
+- must have physical card to provide digital access, digital cert
+- multiple factors, use the card with PIN/fingerprint
+
+Biometric factors
+- fingerprint scanner: phone, door, laptop
+- retinal: unique capillary structure in the back of the eye
+- iris: texture, colour
+- voice recognition: talk for access
+- facial: shape of face and features
+
+Biometric acceptance rates
+- False acceptance rate (FAR)
+	- likelihood that an unauthorized user will be accepted, bad
+- False rejection rate (FRR)
+	- likelihood that an authorized user will be rejected, try again
+- Crossover error rate (CER)
+	- the rate at which FAR and FRR are equal
+	- adjust sensitivity to equalize both values
+	- used to quantitatively compare biometric systems
+
+Token generatos
+- pseudo-random token generators: useful authentication factor
+- carry physical hw token generator
+- use sw-based token generator on you phone
+
+HOTP
+- one-time pw, never again
+- once a session, once each auth attempt
+- HMAC-based One-Time Password algorithm
+	- keyed-hash message authentication code (HMAC)
+	- keys based on a secret key and counter
+- Token-based auth
+	- hash is different every time
+- HW and SW tokens available, need additional technology to make this work
+
+TOTP
+- Time-based One-Time Password algorithm
+- use secret key and time of day, no incremental counter
+- secret key is configured ahead of time, timestamp synced via NTP
+- timestamp usually increments every 30 sec
+- common OTP method, used by google, fb, MS etc.
+
+Certificate-based authentication
+- smart card, private key is on the card
+- PIV (Personal Identity Verification) card
+	- US Federal Gov smart card
+	- pic and identification info
+- CAC (Common Access Card)
+	- US DoD smart card, pic/identity info
+- IEEE 802.1X
+	- gain access to network using a cert
+	- on device storage or separate physical device
