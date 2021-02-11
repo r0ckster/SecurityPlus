@@ -1,0 +1,365 @@
+5.1 Security Policies
+
+Agreement Types
+
+Standard operating procedure
+-important processes to maintain data and system sec
+	- detail routine operations, usually quite extensive
+-day-to-day processes
+	-new account, backup data storage req, encryption key req
+-these should be well documented
+	-comply with industry regulations
+
+Interoperability agreements
+- 3rd-party and outsourced services
+	- the legal side of info-tech
+- web hosting, payroll services, fw management etc.
+	- some of your data in hands of others
+	- what access controls in place?
+- include legal department with these agreements
+
+Common agreements
+- Service Level Agreement (SLA)
+	- min terms for service provider
+	- uptime, response time agreement etc.
+- Business Partners Agreement (BPA)
+	- commonly between manufacturers and resellers
+- Interconnection Security Agreement (ISA)
+	- Used by US Federal Gov to define sec controls
+- Memorandum of Understanding (MOU)
+	- both side agree
+	- usually include statement of confidentiality
+	- informal letter of intent, not a signed contract
+- Memorandum of Agreement (MOA)
+	- next step above MOU, both agree objectives
+	- legal document, even without legal language
+	- unlike contract, may not conatin legally enforceable promises
+
+---
+
+Personnel Management
+
+Business policies
+- Mandatory vacations, the longer vacation > better chance to identify fraud, especially in high-sec environments
+- job rotation, no one person maintain control for long period
+- separation of duties: split knowledge, half a safe combination
+- dual control: two people need to be present
+- clean desk policy: when you leave your desk, nothing is on your desk
+	- limit exposure to sensitive data
+
+Background checks
+- pre-employment screening, verify applicants claims
+- discover criminal history etc.
+
+Adverse actions
+- action that denies employment based on the background check
+- can also include existing employees
+
+Personnel security procedures
+- NDA (non-disclosure agreement)
+	- confidentiality agreement /legal contract
+	- prevents use of info
+- onboarding
+	- induction/training
+	- usually formal process
+- continuing education
+	- sec is constantly changing
+
+Acceptable use policies (AUP)
+- what is acceptable use of company assets
+	- documentation, may be in Rules of Behavior
+- covers internet use, telephones, PCs, etc.
+- used by org to limit legal liability
+	- if someone is dismissed, well-documented reasons why
+
+---
+
+Role-based Awareness Training
+
+- Before providing access, train user
+- specialized training, each role has unique sec responsibilities
+- also applies to 3rd-parties
+- documentation and records
+
+Roles
+- Data owner
+	- executive level manager, responsible for the sec of data
+	- responsible for compliance
+- System admin
+	- enables apps and data, may not be a user
+- System owner
+	- decides about overall operation of data/apps
+	- defines sec and backup policies, also changes and updates
+
+User roles
+- User
+	- app user, least privileged access to app/data
+- Privileged user
+	- additional app/data permissions
+	- area manager, report creation, user/pw changes
+- Executive user
+	- responsible of operation of the app
+	- high-level decision making for direction
+	- evaluates goals and makes decisions about future directions
+
+---
+
+General Security Policies
+
+Social media policies
+- Balance company reputation with employee participation
+- extension of your code of conduct
+	- identification as an employee
+	- personal responsibility
+- condifential information
+	- public comp legally bound
+	- pr person for public comments
+
+Personal email policies
+- business use, no personal use
+- prohibit disruptive or offensive use
+- compliance issues, legal req
+- line becomes hazy when browser-based email is used
+
+---
+
+
+5.2 Business Impact Analysis
+
+Recovery
+- Mean time to restore (MTTR)
+	- mean time to repair
+- Mean time to failure (MTTF)
+	- the expected lifetime of a non-repairable product/system
+- Mean time between failures (MTBF)
+	- predict time between failures
+- Recovery time objectives (RTO)
+	- get up running quickly and particular service level
+- Recovery point objectives (RPO)
+	- how much data loss acceptable
+	- bring system back online, how far back data goes?
+
+Calculating uptime and availability
+- % - 5 nines - 99,999%
+- "Availability" is negotiated definition
+	- especially if it's part of your bonus
+
+- 99,9999 	00.00:32 downtime
+- 99,999		00:05:15
+- 99,99			00:52:34
+- 99,9			08:45:36
+- 99				87:36:00
+
+
+Mission-essential functions
+- if hurricane, where you start your analysis, broad business req
+- what computing systems are required for these mission-essential business functions? Identify critical systems
+
+Removing single point of failure
+- single event can ruin your day, if no plans
+- networking configuration
+	- multiple devices (the Noahs Ark of networking)
+- Facility/Utilities
+	- backup power
+- People/location
+	- hurricane can disrupt personnel travel
+- no practical way to remove all points of failure
+
+Impact
+- Life: the most important
+- Property: risk to buildings/assets
+- Safety: some environments too dangerous to work
+- Finance: the resulting financial cost
+- Reputation: event can cause status/character problems
+
+Privacy Compliance
+- some compliance req a public privacy statement
+- Privacy threshold analysis (PTA)
+	- 1st step in compliance process
+	- identify business processes that are privacy-sensitive
+	- determine if PIA is req
+- Privacy Impact Assessment (PIA)
+	- ensures compliance with privacy laws and regulations
+	- what PII is collected/why
+	- how PII data collected,used,secured
+
+---
+
+
+5.3 Risk Assessment
+
+Threat assessments
+- Environmental: tornado, hurricane..
+- Man-made: internal/external, employees/outside orgs
+
+Quantitative risk calculation
+- likelihood
+- Annualized Rate of Occurrence (ARO)
+	- how likely hurricane will hit? In Montana? Florida?
+- Single Loss Expectancy (SLE)
+	- laptop stolen = 1000$
+- Annual Loss Expectancy (ALE)
+	- ARO x SLE
+	- 7 laptops lost a year = 7000$
+- The business impact can be more than monetary
+	- quantitative vs qualitative
+
+Evaluating risk
+- Risk register
+	- every project has a plan, also risk
+	- identify and document the risks
+	- apply possible solutions and monitor results
+- Supply chain assessment
+	- get a product or service from supplier to cu
+	- evaluate coordination between groups
+	- identify areas of improvement, asses the IT systems supporting the operation
+	- document the business process changes
+
+Qualitative risk assessment
+- identify significant risk factors
+- ask opinions about significance
+- display visually with traffic light grid or similar method
+
+Business impact analysis
+- critical business functions
+- what is impacted: revenye, legal req, customers
+- how long impacted: need personnel, equipment, resources?
+- impact to the bottom line: disaster recovery good investment?
+
+Testing for risk
+- many servers contain sensitive data
+- running vuln and pentest can cause outages
+- formal authorization
+	- remove legal liability from testing
+
+Risk response techniques
+- Risk-avoidance: stop participating in high-risk activity
+- Transference: buy insurance
+- Acceptance: take the risk
+- Mitigation: decrease risk level, invest in sec systems
+
+Change management
+- how to upgrade sw, change fw confs etc.
+- one of the most common risks in enterprise
+- often overlooked or ignored
+- have clear policies: freq, duration, installtion process, fallback
+- sometimes difficult to implement
+
+---
+
+5.4 Incident Response
+
+Incident Response Planning
+
+Sec incidents
+- user click email attachment and executer malware
+- DDoS
+- Conf info is stolen
+- user install p2p and uses it
+
+Incident categories, examples
+- External/removable media
+- Attrition: brute-force attack
+- Web: attack from web site or web based app
+- Email: attack from email attachment
+- Improper usage: attack resulted from violation of Acceptable Use Policy
+- Loss/theft of equipment
+- Other
+
+Roles and responsibilities
+- Incident response team
+	- specialized group, trained and tested
+- IT security management
+	- corporate support
+- Compliance officers
+	- Intricate knowledge of compliance rules
+- Technical staff
+- User community, they see everything
+
+Incident notification
+- Contact list
+- Corporate / Org: CIO / Head of Info Sec / Internal Response Teams
+- Internal non-IT: HR, PA, Legal dep
+- External contacts: system owner, law enforc, US-CERT
+
+CIRT (Cyber-incident response team)
+- Receives, reviews and responds
+- Determine what type of events require a CIRT response (virus, ransomw, DDoS?)
+- CIRT may or may not be part of org structure (as-needed basis)
+- Focuses on incident handling (response, analysis, reporting)
+
+Exercise
+- Test before actual event, scheduled update sessions
+- rules of engagement, do not touch production
+- very specific scenario
+- evaluate response: document and discuss
+
+---
+
+Incident Response Process
+
+NIST SP800-61 (National Institute of Standards and Technology)
+- Computer Security Incident Handling Guide
+- Incident response lifecycle:
+	- preparation
+	- detection and analysis
+	- containment, eradication and recovery
+	- post-incident activity
+
+Preparing for incident
+- comm methods, contacts
+- incident handling hw and sw: laptops, forensic softw
+- incident analysis resources: documentation, network diagrams..
+- mitigation software: clean OS and app images
+- policies needed for incident handling: everyone knows their roles
+
+The challenge of detection
+- many different detection sources
+- much white noise, attacks coming all the time
+- incidents almost always complex
+
+Incident precursors
+- heads up, incident might occur
+- logs
+- exploit announcements
+- direct threats (hacking group, twitter)
+
+Incident indicators
+- buffer overflow attempts, identified by IPS
+- AV alarms
+- Host-based monitor detects conf changes
+- Network traffic flows deviate from the norm
+
+Isolation and containment
+- sandboxes
+- isolation can be problematic
+	- malware checks
+	- if notices sandbox, everything deleted/encrypted/damaged
+
+Recovery after an incident
+- eradicate the bug
+	- remove malware
+	- disable breached accounts
+	- fix vulns
+- recover the system
+	- restore backups, rebuild from scratch, replace files
+	- tighten down the perimeter
+
+Reconstitution
+- phased approach, hard to fix all at once
+- recovery may take months
+- plan should be efficient
+	- start with quick, high-value sec changes (patch, fw policy)
+	- later phases involve "heavier lifting" (infra changes..)
+
+Lessons learned
+- learn and improve
+- post-incident meeting
+- don't wait too long	
+- what happened? timestamps
+- how incident plans work?
+- what to do better?
+- which indicators to watch next time?
+
+---
+
