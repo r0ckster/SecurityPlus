@@ -1,0 +1,289 @@
+2.2 SECURITY SOFTWARE
+
+SOFTWARE SECURITY TOOLS
+
+Passive security
+- watch packets go by
+- lot to learn
+- top talkers, servers, clients, apps, OSs, services
+
+Active security
+- send traffic to device, watch results
+- query login page
+- try known vuln, check account access
+
+Protocol analyzer
+- solve complex app issues, get into details
+- gathers packets on network
+- view traffic patterns, identify unknown traffic, verify filtering
+- large scale storage, big data analytics
+
+Network scanners
+- active - scan IPs/ports, OSs, services etc.
+- visually map the network, find rogue systems (difficult to hide from a layer 2 ARP)
+
+Wireless scanners and crackers
+- wireless monitoring, packet capturing
+- wireless attacks, check death attacks etc.
+- cracking, how easy to crack your wifi key
+
+PW crackers
+- pw stored as hash, one-way trip
+- some stored without complexity
+	- easy to brute-force a weak hash
+- get hashes > use wordlist, rainbow tables etc.
+
+Vulnerability scanners
+- check if you missed sec patch
+- minimally invasive, but active (not like pentest)
+- gather much info as possible, prioritize after
+- Tenable Nessus etc..
+
+Configuration compliance scanners
+- devices meet minimum sec confs?
+	- need to comply with internal req or industry regulations
+- check fo varios confs (OS version, installed apps, network settings, AV etc.)
+- auditing may be ongoing
+	- report current status, identify changes over time
+	- integrated with login process / VPN connection
+
+Exploitation frameworks
+- many opportunities for exploits: browser, OS, app, embedded devices..
+- don't invent the wheel, use frameworks
+	- BeEf - The Browser Exploitation Framework Project
+	- RouterSPloit - Router Exploitation Framework
+	- Metasploit - Build your own or use modules in existing exploit db
+
+Data sanitization tools
+- overwrite data on old HDD
+	- can overwrite whole drive or one file
+
+Steganography tools
+-	"concealed writing", security through obscurity
+- network based, embed msg in TCP packets
+- use image, embed msg in image itself
+- invisible watermark, yellow dots on printers (serial numb and timestamp)
+
+Honeypots
+- Attract the bad guys and trap them there
+- create virtual world to explore
+- must be real enough
+
+Backup utilities
+- protect from unexpected downtime (malware infection, ransomware, server defacement etc.)
+- realtime file sync, rsync
+- regular partial backups
+- full backups, complete file backups / system images
+- complete coverage / fast recovery
+
+Banner grabbing
+- apps can be chatty, sometimes say too much
+- banner is always there, usually behind the scenes
+- can be captured by nc, nmap etc.
+
+
+------
+
+COMMAND LINE SECURITY TOOLS
+
+ping
+- test connectivity, determine round-trip time
+- Internet Control Message Protocol (ICMP)
+- 1st troubleshoot, can you ping the host?
+
+netstat
+-network statistics
+- "netstat -a" show all active connections
+- "netsat -b" show binaries (Win)
+- "netstat -n" , do not resolve names
+
+traceroute
+- determine route a packet takes to destination
+- map entire path
+- tracert (win), traceroute (POSIX)
+- takes advantage of ICMP Time to Live Exceeded error msg
+- TTL refers to hops, not time
+- TTL=1 first router, TTL=2 second router etc
+- not all devices reply with ICMP, some FW filter
+
+nslookup and dig
+- lookup info from DNS servers (canonical name, IP, cache timers)
+- "nslookup" win and unix, lookup names and IPs
+- dig (Domain Information Groper)
+	- more advanced domain info
+
+ARP (Address Resolution Protocol)
+- determine MAC address based on IP address
+- you need hw address to communicate
+- "arp -a" view local ARP table
+
+ipconfig and ifconfig
+- most troubleshooting starts with your IP address
+- determine TCP/IP and network adapter info
+
+tcpdump
+- capture packets from cli
+- available on most unix/linux/macos, Win has "WinDumb"
+- aplly filters in real time, save data, use in another app (wireshark), written in standard pcap format
+
+Nmap
+- network mapper, port/OS/service scan, additional scripts
+
+netcat (ncat)
+- "read" or "write" to the network
+- open a port and send or receive some traffic
+- listen on a port, transfer data, scan ports
+- become a backdoor
+
+--------
+
+2.3 COMMON SECURITY ISSUES
+
+Unecrypted credentials
+- auth is critical process, must be protected
+- some protocols arent encrypted (telnet, FTP, SMTP,IMAP)
+- verify with packet capture
+
+Logs and event anomalies
+- gather as much info as possible
+- many sources: switch, router, fw, servers, ips, av
+- use SIEM to consolidate logs and correlate data, reports
+
+Permission issues
+- simple oversight, huge vulnerability
+- door was left open, no need to lockpick
+- confirm permissions on initial conf
+	- periodic audits
+
+Access violations
+- segmentation fault, OS prevents access to restricted area of memory
+- might be programming error, security issue, DoS
+
+Certificate issues - Trust
+- a cert should be signed by trusted party
+- certs should be relatively new
+- apps must perform the proper cert checks
+	- if not, it's easy to MitM attack
+
+Data exfiltration
+- data is your most valuable asset, also mb to other people
+
+Misconfigured devices
+- "open door"
+- default usrname/pw left on
+- outdate software, known vulns
+- running debug/maintenance code
+- FW rules provide too much access, can be difficult to audit
+- content filters, URL's not specific enough, some protocols not filtered
+- Access Points, no encryption, open confs
+
+Weak security configurations
+- Too old encryption, like DES, easy to bruteforce
+- Encryption vulns, like WEP
+- weak hash, SHA-1, many hash collisions
+
+Personnel issues
+- weakest link, people make mistakes
+- Policy violations, it's in your Acceptable Use Policy (AUP)
+- Insider threats, auth users have more free reign
+	- important to assign correct rights/permissions
+- Social Engineering, people like to help
+- Social media, posting internal info, many orgs have policy
+- personal emails
+
+Unauthorized software
+- may conflict with orgs mission-critical software
+- could be malicious
+- licensing
+- ongoing support (security patches, updates)
+
+Baseline deviation
+- everything should be documented
+	- hw, software, network traffic patterns, data storage
+- changes to norm should be identified (alerts)
+- common with VPNs
+	- before connecting, check baseline (av, updates)
+
+License compliance violation
+- OS, apps, HW appliances - all use different methods
+- availability, expiration may cause problems
+- integrity, data and apps must be accurate and complete
+	- may cause problems with data integrity
+
+Asset management
+- Identify and track computing assets (usually automated)
+- respond faster to sec problem
+- keep eye on valuable assets
+- track licenses
+- verify all devices up to date
+
+Authentication issues
+- papers, please
+- number of factors, more the better, more chance of problems
+- lapse in authentication can open entire network
+
+-----
+
+2.4 Analyzing Security Output
+
+Host-based IDS/IPS
+- used to be separate app, now integrated to EPP
+- protect based on signatures, decrypted data
+- protect based on activity, why are you modifying that data?
+
+AV
+-will alert on virus or bad URL, logs it
+
+File integrity check
+- OS check, original files in place?
+
+Host-based FW
+- protect against other on network, restrict access to your personal computer
+- required for laptops, mobile devices
+- restrict by app and port, logs attempts
+
+App whitelisting
+- decision made in the OS
+- often muilt-in to OS management
+- app hash, only allow aps with correct hash
+- certificate, only digitally signed apps from certain publisher
+- path, only app in these folders
+- network zone, apps can only run from this network zone
+
+Removable media
+- USB drives, portable hard drives (bane of the security)
+- malware infections, unknown USB drives
+- exfiltration, terabytes of data fits in your pocket
+- view USB media use, log filenames that are copied
+
+Advanced malware tools
+- specialized removal and recovery tools
+- malware is pervasive
+- best recovery is to delete and restore from backup
+
+Patch management tools
+
+UTM / All-in-one security appliance
+- Unified Threat Management (UTM) / Web security gateway
+- URL filter / content/malware inspection, spam filter, CSU/DSU, router, switch, fw, ids/ips, bandwidth shaper, vpn endpoint
+
+Data Loss Prevention (DLP)
+- social sec numbers, cc numbers, medical records
+- stop data leakage
+
+Data Execution Prevention (DEP)
+- no-eXecute bit
+	- Intel XD bit (eXecute Disable)
+	- AMD Enhacned Virus Protection
+- code can't run from protected memory locations
+- prevents malware from executing
+- Windows DEP logs in Event Viewer
+
+Web application firewall (WAF)
+- not like a normal FW, applies rules on HTTP/HTTPS conversations
+- allow/deny on expected input
+- protect from SQL injection
+- major focus on Payment Card Industry Data Security Standard (PCI DSS)
+
+
+
