@@ -1,0 +1,185 @@
+4. IDENTITY AND ACCESS MANAGEMENT
+
+4.1
+
+AAA and Authentication
+
+AAA framework
+	- identification, this is who you claim to be (usually username)
+	- authentication, prove you are why you are (pw and others)
+	- authorization, based on your id and auth, what access do you have?
+	- accounting, resources used: login time, data sent/received, logout time
+
+Multi-factor authentication
+- something you have, have, know, are, do
+- can be expensive: separate tokens, specialized scanning equipment
+- can be inexpensive: free smartphone apps
+
+Something you are
+- biometric authentication: figerprin, iris scan, voiceprint
+
+Something you have
+- smart card, usb token, hw/sw tokens, your phone
+
+Something you know
+- PW, PIN (personal identification number), pattern
+
+Somewhere you are
+- provide a factor based on your location
+- transaction only completes if you are in particular geography
+- IP address: not perfect, works with ipv4, not ipv6
+- mobile device with geolocation better, but not perfect
+
+Something you do
+- handwriting, typing technique
+- similiar to biometrics
+
+
+Federation
+- provide network access to others, like partners, suppliers etc.
+- third-parties can establish a federated network
+	- authenticate and authorize between two orgs (login with your FB)
+- 3rd-parties must establish a trust relationship, and degree of trust
+
+Single sign-on (SSO)
+- authenticate one time, access everything
+- saves time, seamless process
+- different methods: Kerberos, 3rd-party methods
+
+Transitive trust
+- trust relationships need to be established early
+	- difficult to change once in place
+- one-way trust: domain B trust A, A doesnt trust B
+- two-way trust: both trust each other equally
+- non-transitive trust: trust applies to that domain
+- transitive trust: if domain A trusts B, B trusts C, then A trusts C
+
+
+---
+
+
+4.2 IDENTITY AND ACCESS SERVICES
+
+RADIUS (Remote Authentication Dial-in User Service)
+- common AAA protocol, supported widely by HW and OS
+- centralize authentication for users
+	- routers, switches, FWs, server authentication, remote VPN, 802.1X
+
+TACACS (Terminal Access Controller Access-Control System)
+- remote authentication protocol
+- created to control access to dial-up lines to ARPANET
+
+XTACACS (Extended TACACS)
+- ptoprietary vesrion of TACACS, Cisco-created
+- additional support for accounting and auditing
+
+TACACS+
+- latest version of TACACS, not backward compatible
+- more authentication req/respond codes
+- released as open standard in 1993
+
+LDAP (Lightweight Directory Access Protocol)
+- protocol for reading/writing directories over IP network
+- TCP/UDP ports 389
+- windows AD, apple opendirectory etc.
+
+X.500 Distinguished names
+- attribute=value pairs
+- most specific attribute is listed first > easy to build info tree
+- hierarchical structure
+- container objects (country, org, OU)
+- leaf objects (users, computers, files, printers)
+
+Microsoft NTLM
+- windows only challenge/response: domain name, username, pw hash
+- LAN Manager (LANMAN): MS and 3Com network OSs
+- NT LAN Manager v2
+	- hash challenge (similiar to CHAP)
+	- somewhat insecure, like old hash algo
+- some Win pw db contain LM hash > vuln to forwarding attack
+- migrate to Kerberos if not already
+
+Kerberos
+- Network authentication protocol
+- auth once, trusted by the system, no need to re-auth on everything
+- mutual authentication - the client and the server (protect against MitM)
+- Standard since 1980s, developed by MIT
+- MS started using Kerbor in Windows 2000
+	- based on Kerbero 5.0 open standard
+	- compatible with other OS and devices
+
+SSO with Kerberos
+- authenticate one time
+	- lots of backend ticketing
+	- cryptographic tikest
+	- save time, but only works with Kerberos
+
+---
+
+PAP, CHAP and MS-CHAP
+
+PPP authentication
+- Point-to-Point Protocol
+	- analog dialup, ISDN
+PPTP (... Tunneling)
+PPPoE (... over Ethernet) - DLS authentication
+- need to authenticate through non-ethenet networks (PAP, CHAP, MS-CHAP)
+
+PAP (Password Authentication Protcol)
+- basic authentication method
+- used in legacy systems
+- rare to see singularly used
+- weak authentication shceme
+- non-encrypted, bcs not required on analog dialup lines
+
+CHAP (Challenge-Handshake Authentication Protocol)
+- encrypted challenge sent over the network
+- three-way handshake
+	- after link is established, server sends challenge message, client responds with a password hash (calculated from challenge and pw), server compares received hash with stored
+- challenge-response occurs periodically during connection
+
+MS-CHAP (Microsofts implemention of CHAP)
+- commonly used on MS PPTP, MS-CHAP v2 more recent version
+- sec issues related to the use of DES
+	- easy to bruteforce
+	- don't use MS-CHAP
+	- consider secure VPN technology
+
+---
+
+Federated Identities
+
+Server-based authentication
+- HTTP/web browser communication is stateless
+- each req is unique and no relationship to prev req
+- traditionally server has kept track of logins
+	- you get sessionID when login
+- adds overhead to the server
+	- difficult to scale and manage across multiple devices
+	- adds challenges with redundancy and cloud services
+
+Token-based authentication
+- no session info is stored on the server, stateless 
+- after user authenticates, app sends token to client, stored locally
+- token is provided with each req on the server, which is validated by server
+
+Federation
+- provide network access to other parties
+- provide SSO and more
+- 3rd-parties can establish a federated network
+	- auth and authorize between two orgs
+	- login with your FB credentials
+- 3rd-parties must establish a trust reslationship and degree of trust
+
+SAML (Secure Assertion Markup Language)
+- Open standard for authentication and authorization
+- you can authenticate through 3rd-party to gain access
+- Shibboleth, open-source, implements SAML to provide federated SSO
+- not originally designed for mobile apps
+
+OAuth
+- authorization framework
+- created by Twitter, Google etc.. significant industry support > popular
+- not an authentication protocol
+	- OpenID Connect handles the SSO authentication
+	- OAuth provides authorization between apps
