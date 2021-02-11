@@ -1,0 +1,274 @@
+6.2 Cryptography Algorithms
+
+Symmetric Algorithms
+
+DES (Data Encryption Standard)
+- DES and Triple DES
+- dev 1972-1977 by IBM for NSA
+- 64-bit block cipher
+	- 56-bit key, easily brute-forced today
+
+3DES (Triple DES)
+- three different keys 
+	- two separate keys is deprecated, single key isn't allowed
+- Use DES three times
+	- encrypt with first key
+	- decrypt with second
+	- encrypt with third
+- superseded by AES (Advanced Encryption Standard)
+
+RC4 (Rivest Cipher 4)
+- Ron Rivest
+- Part of ill-fated WEP standard
+- also part of SSL, but removed from TLS
+- RC4 has "biased output"
+	- if third byte is zero, and the second byte is not equal to two, then second output byte is always zero
+- not common these days, WPA2 moved to AES
+
+AES (Advanced Encryption Standard)
+- US Federal Gov Standard
+- it took 5 years to standardize
+- 128-bit block cipher
+	- 128, 192 and 256-bit keys
+- used in WPA2
+
+Blowfish and Twofish
+- Blowfish, by Bruce Schneier
+	- 64-bit block cipher, variable length key (1 to 448 bits)
+	- no known way to break the full 16 rounds of encryption
+	- one of the first secure ciphers, not limited by patents
+- Twofish, successor to Blowfish
+	- 128-bit block size, key sizes up to 256
+	- no patent, public doamin
+
+---
+
+Block Cipher Models
+
+Block cipher mode of operation
+- encrypt one fixed-length group of bits at a time (a block)
+- mode of operation
+	- defines the method of encryption
+	- may provide a method of authentication
+- block size is a fixed size
+	- not all data matches block size
+	- split your plaintext into smaller blocks	
+	- some modes req padding before encrypting
+
+ECB (Electronic Codebook)
+- simplest encryption mode, too simple for most use cases
+- each block is encrypted with same key
+	- identical plaintext block create identical ciphertext blocks
+
+CBC (Cipher Block Chaining)
+- popular mode of operation, easy to implement
+- each plaintext block is XORed with previous ciphertext block
+	- adds additional randomization
+	- use an intialization vector for the first block
+
+CTR (Counter)
+- block cipher mode / acts like a streamer cipher
+	- encrypts successive values of a "counter"
+- plaintext can be any size, since it's part of the XOR
+
+GCM (Galois/Counter Mode)
+- encryption with authentication
+	- auth part of the block mode
+	- combines Counter Mode with Galois authentication
+- minimum latency, minimum operation overhead
+	-very efficient encryption/authentication
+- commonly used in packetized data (wireless, IPsec, SSH, TLS)
+
+
+---
+
+Asymmetric Algorithms
+
+Diffie-Hellman key exchange
+- key exchange method over insecure comm channel
+- pub in 1976
+- DH does not itself encrypt or authenticate
+	- anonymous key-agreement protocol
+- used for PFS
+	- Ephermal Diffie-Hellman (EDH or DHE)
+	- combine with elliptic curve crypto fo ECDHE
+- uses asymmetric crypto to create symmetric key
+
+RSA (Ron Rivest, Adi Shamir, Leonard Adelman)
+- pub in 1977
+- first practival public-key crypto system
+	- encrypt, decrypt, digital signtatures
+- based on the product of 2 large prime numbers
+	- you must know the factors to decode
+- now released into the public domain	
+	- used extensiverly for web site encryption and digital rights mngmt
+
+DSA (Digital Signature Algorithm)
+- standard for digital signatures
+	- modifies DA 
+- combine with elliptic curve crypto
+	- fast/efficient digital signatures
+- ECDSA - Elliptic Curve Digital Signature Algorithm
+
+ECC - Elliptic Curve Cryptography
+- used for encryption, digital sign, pseudo-random generators
+- instead of numbers, use curves
+	- use smaller keys than non-ECC encryption
+
+PGP and GPG
+- popular asymmetric encryption
+- commercial software (Symantec)
+- Open standard - OpenPGP
+	- implemented as sw Gnu Privacy Guard (GPG)
+
+
+---
+
+Hashing Algorithms
+
+MD5 (Message Digest Algorithm)
+- pub in 1992, replaced MD4
+- 1996 vulns found, hash collision
+
+SHA (Secure Hash Algorithm)
+- dev by NSA
+- SHA-1, widely used, 160-bit digest, 2005 hash collision
+- SHA-2, up to 5012-bit digest, preferred SHA variant
+
+HMAC (Hash-based Message Authentication Code)
+- combine hash with a secret key, e.g. HMAC-MD5, HMAC-SHA1
+- verify data integrity and authenticity
+- used in network encryption protocols like IPsec, TLS
+
+RIPEMD (RACE Integrity Primitives Evaluation Message Digest)
+- RACE - Research and Development in Advanced Communications Technologies in Europe
+- family of message digest algorithms
+- centralized crypto standards and management
+- original RIPEMD found collision issue in 2004
+	- replaced with RIPEMD-160
+	- based upon MD4 but performs similiar to SHA-1
+
+---
+
+Key Stretching Algorithms
+
+Weak key can be made stronger by hashing a pw, hashing the hash etc.
+
+Libraries
+- already built for your app, no additional programming needed
+- bcrypt
+	- generates shas from pw, uses Blowfish cipher for multiple rounds of hashing
+- Password-Based Key Derivation Function 2 (PBKDF2)
+	- part of RSA public key crypto standards
+
+---
+
+Obfuscation
+
+XOR (Exclusive OR) cipher
+- outputs true when inputs differ
+- used extensively in cryptography
+	- with truly random key, results are theoretically unbreakable
+
+Substitution ciphers
+- simple substitution A is D etc.
+- Caesar cipher
+	- substitute one letter with another at a fixed position
+- can be hacked with frequency analysis or brute force
+
+ROT13 (Rotate by 13 places)
+- commonly found in online forums
+	- obfuscate spoilers
+
+---
+
+
+6.3 Wireless Security
+
+Wireless Cryptographic Protocols
+
+Wireless encryption
+- all wireless devices are radio transmitters/receivers
+- anyone can listen in, need to encrypt data
+- only people with PW can transmit/listen (WPA/WPA2)
+
+WPA (Wifi Protecte Access)
+- 2002 replaced WEP
+
+TKIP (Temporal Key Integrity Protocol)
+- combines secret root key with the IV
+- adds sequence counter to prevent replay attacks
+- implements 64-bit Message Integrity Check, protect against tampering
+- TKIP has vulns, deprecated standard
+
+WPA2 and CCMP
+- began in 2004
+- AES replaced RC4, CCMP (Counter Mode with Cipher block Chaining) replaced TKIP
+- CCMP
+	- uses AES for data confidentiality
+	- 128-bit key and 128-bit block size
+	- req additional comp resources
+- CCMP security devices
+	- data confidentiality, authentication, access control
+
+---
+
+Wireless Authentication Protocols
+
+EAP (Extensible Authentication Protocol)
+- framework
+- many diff ways to authenticate
+- WPA/WPA2 use five EAP types as authentication mechanisms
+
+EAP-FAST (EAP Flexible Authentication via Secure Tunneling)
+- Cisco's proposal to replace LEAP (used with WEP)
+- light, secure
+
+EAP-TLS
+- strong sec, wide adoption
+- support from most of the industry
+
+EAP-TTLS (EAP Tunneled TLS)
+- support any  other auth protocols in a TLS tunnel
+
+PEAP (Protected Extensible Authentication Protocol)
+- protected EAP
+- by MS, Cisco, RSA Security
+- encapsulates EAP in a TLS tunnel, one cert on the server
+- commonly implemented as PEAPv0/EAP-MSCHAPv2
+
+802.1X
+- IEEE 802.1X - port based network access control (NAC)
+- used in conjunction with an access db
+	- RADIUS, LDAP, TACACS+
+
+RADIUS Federation
+- members of one org can auth to the network of another org
+- use normal creds
+- 802.1X as auth method, RADIUS on the backend, EAP to authenticate
+
+---
+
+Wireless Security
+
+Wireless security modes
+- open system - no auth pw required
+- WPA-Personal / WPA-PSK
+	- WPA2 with pre-shared key
+	- everyone uses the same 256-bit key
+- WPA-Enterprise /WPA-802.1X
+	- auth users with auth server (i.e. RADIUS)
+
+Captive portal
+- auth to a network, common on wireless networks
+- access table recognizes lack of auth
+	- redirects your web access to captive portal page
+- username / pw
+- once proper auth provided, web session continues
+
+Using WPS (wifi protected setup)
+- "wifi simple config"
+- "easy" setup for mobile device
+	- pin, nfc, usb, push a button
+- ez hackable
+
