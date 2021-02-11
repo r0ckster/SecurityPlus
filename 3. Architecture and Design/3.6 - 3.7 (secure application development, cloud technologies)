@@ -1,0 +1,358 @@
+3.6 SECURE APPLICATION DEVELOPMENT
+
+
+Development Life-Cycle Models
+
+Building an app
+- systems/app development life cycle
+- no "best way"
+	- frameworks help
+	- many moving parts, budget, customer req, schedule etc.
+
+Waterfall
+- sequential design process, traditional model
+- first, second then third step..
+- Req: document the request
+- Analysis: build models and business rules
+- Design: pick software architecture
+- Testing: Debug the app
+- Operations: Install and support the app
+
+Agile
+- ready, shoot, aim, repeat
+- everyone works together, co-location and pair programming
+- app under construction better than slideware
+- customer collaboration, constant comms
+- quick response to change, development continuos
+
+---
+
+Secure DevOps
+
+DevOps
+- Development and Operations (dev, QA, ops)
+- create and deploy > speed,availability,security
+- emphasis on automation and monitoring (integration, testing, release, mangage)
+- shrink deployment cycles, increase frequency
+
+Security automation
+- automation relatively inexpensive
+- functional sec tests: login,logout,ensure sec platform
+- test against known vulns: misconfig, weak SSL cipher etc.
+- pentest: test the OS and app services
+- test the app: manipulate app to get unexpected results
+
+Continuous integration
+- code constantly written and merged in to central repository
+- many chances for sec problems
+- basic sec checks during development
+- large-scale sec analysis during testing phase
+
+Immutable systems
+- update app every week > nothing like original deployment, can't rebuild, conf drift
+- Immutable systems are locked down and unable to change
+- to update app, new iteration is deployed
+- much stronger sec posture
+
+Infrasturcure as code (IAC)
+- cloud computing, relies on automation
+- if automated, can quickly and safely deploy it
+	- except server hw, switches, routers, FWs etc.
+	- unless you virtualize the infrastructure devices
+
+---
+
+Version Control and Change Management
+
+The constant of change
+- always will be modifications, bug fixes, new features, sec patch
+- important how to manage changes
+- change during app development, req version control
+- changes to production, formal change management
+
+Vesion control
+- create file, make change, make change etc.
+- track those changes, revert back
+- commonly used in sw development, OS, wifi sw, cloud-based file storage
+- useful for sec: compare versions over time, identify modifications
+- sec challenge: historical info can be sec risk
+
+Change management
+- change control: formal process for managing change, avoid downtime, confusion, mistakes
+- process change
+	- plan, estimate the risk, recovery plan, test, document all, make the change
+
+Change Management and sec
+- every change has a sec component, must be evaluated separately
+- sec patch makes system more secure ideally
+- app update: new version, new code, new sec concerns
+- change to the app insance: new server, updated middleware, all must be evaluated together
+
+---
+
+Provisioning and Deprovisioning
+
+Provisioning
+- Deploy an app: web, db, middleware server, ws, cert update etc.
+- App software sec: OS, app
+- network sec: secure VLAN, internal/external access
+- software deployed to WS: check executables for malicious code, verify security posture
+
+Orchestration
+- automation is the key in cloud computing
+	- services appear/disappear automatically or push button
+- entire app instances instantly provisioned (server, fw, policies..)
+- sec policies should be part of orchestration
+	- apps provisioned, proper sec automatically included
+
+Deprovisioning
+- deismantle/remove app inscance, security deprovisioning is important
+	- don't leave open hole, dont close important ones
+- FW policies must be reverted
+- don't leave info/data out there
+
+---
+
+Secure Coding Techniques
+
+Concepts
+- balance between time/quality, coding sec in mind often secondary
+- QA process important
+- vulns will eventually be found and exploited
+
+Error and Exception handling
+- every possible problem, mishandled exception can allow execution of code
+- avoid default error messages - give too much info
+
+Input validation
+- validate actual vs expected
+- document all methods: forms, fields, type
+- check and correct all input (normalization)
+- the fuzzers will find what you missed
+
+Stored procedures
+- SQL dbs, client sends detailed requests for data
+- client req can be complex, sometimes modified by user
+- stored procedures limit the client interactions
+	- to be secure, no SQL queries, only stored procedures
+
+Code signing
+- confirms that app was developed by specific dev
+- trusted CA signs developers public key
+- dev signs the code with their private key
+
+Encryption
+- open source code > can look for security holes
+- development platform should use encryption
+- sended data over network should be encrypted
+- data at rest should be secured
+
+Obfuscation/camouflage
+- make normally understandable to difficult 
+- helps prevent the search for sec holes
+
+Code reuse/dead code
+- use old code to build new app
+- reusing vulnd code spreads it to other apps
+- dead code: calculation made, code executed, result tallied but not used anywhere in the app
+	- removing it makes app more sec
+
+Validation points
+- server-side validation
+	- helps protect against malicious user
+	- hacker may not even use your UI
+- client-side validation
+	- end-users app makes validation, can filter legitimate input
+	- may provide speed to the user
+- use both, but especially server-side
+
+Memory Management
+- as dev, be mindful how memory is used
+- many opportunities to build vuln code
+- never trust user input
+- buffer overflow huge sec risk
+
+Third-party libraries and SDKs
+- programming lang does almost everything
+- extend the functionality
+- sec risk: app code written by someone else, extensive testing req
+
+Data exposure
+- much sensitive data: CC, social sec numbers, medical info...
+- how app handling data: encryption, displaying info on screen
+- all input/output processess important, check for data exposure
+
+---
+
+Code Quality and Testing
+
+Static code analyzers
+- Static Application Security testing (SAST)
+	- help to identify sec flaws
+-	many sec vulns found easily: buffer overflow, db injections..
+- cant find everything: auth sec, insec cryptography etc.
+- don't rely on automation for everything
+- still have to verify each finding, false positives
+
+Dynamic analysis (fuzzing)
+- send random input to app
+	- fault-injecting, robustness/syntax/negative testing
+- looking for exception: app crash, server error
+
+Fuzzing engines and frameworks
+- Platform/language etc. specific
+- time and process resource heavy
+	- many iterations to try, many use high-probability tests
+
+Stress testing
+- works with 1 user, 1000?
+- inadvertent results can occur at load
+	- unintended error messages, app details displayed, kernel/mem dumps
+- extensive automation options
+	- automate individual workstations
+	- simulate large ws loads
+	- extensive reporting
+
+Sandboxing
+- test environment looks like production
+- QA can fuzz, overload, try break sandboxed environment
+
+Model verification
+- Verification and validation (V&V) of requirements
+- Verification: does sw work properly, any bugs, building the product right?
+- Validation: meet the high level req? building the right product?
+
+Compiled vs runtime code
+- Compiled code
+	- you dont see the source code
+	- the app is executable compiled from the source
+	- specific to OS and CPU
+	- logical bugs can be identified at compile time
+- Runtime code
+	- source code viewable
+	- code instructions execute when app is run
+	- errors detected during or after execution
+
+-------
+
+
+3.7 CLOUD TECHNOLOGIES
+
+Virtualization Overview
+- one hw/pc, many OS
+- separate OS, independent CPU, mem, network etc.
+- Host-based virtualization, your normal desktop plus others
+- standalone server that hosts virtual machinces
+	- enterprise-level
+
+The hypervisor
+- Virtual Machine Manager
+- manages virtual platform and guest OS
+- may req CPU with virtualization support
+- HW management: cpu, network, memory
+
+Hypervisors
+- Type 2
+	- run on a host OS (top of win,linux, mac)
+- Type 1
+	- bare metal, embedded, native
+	- run directly on hw, no OS needed
+- Application containerization
+	- run app without launching entire VM
+	- uses just right resources for app
+	- everything needed for app is in the image (container/cell)
+
+---
+
+Virtualization Security
+
+- VM sprawl avoidance
+	- with one click multiple servers/networks too ez to build instances
+	- get out of hand quickly
+	- not sure what VM for what
+	- need formal process/detailed documentation
+
+- VM escape protection
+	- break out of VM and interact with host OS or HW
+	- once you escape VM, potentially control all VMs
+
+---
+
+Cloud Deployment Models
+
+SaaS (Software as a Service)
+- on demand sw, no local installation
+- central mngmt of data and apps
+- no dev work req
+- google mail
+
+IaaS (Infrastructure as a service)
+- can be called HaaS (HW as a service)
+- outsource your equipment
+- you're responsible for the management and sec
+- data out in the cloud but you're more in control
+- web server providers
+
+PaaS (Platform as a service)
+- no servers, no sw, no maintenance team, no HVAC
+- someone else handles platform, you handle development
+- no direct control of data, people or infra
+- put the building blocks together	
+	- dev your app from what's available on platform
+	- SalesForce
+
+Private
+	- your own local data center
+Public
+	- available for everyone (Azure, AWS)
+Hybrid
+	- mix of privtate/public
+Community
+	- several orgs share shame resources
+
+---
+
+Security in the Cloud
+
+On-premise
+- all apps on local hw
+- servers in your data center in your building
+Hosted
+- your servers not in your building
+- maybe not running on your hw
+- usually specialized computing environment
+Cloud
+- app instances can be created/torn down on-demand
+- resources available as needed
+
+Cloud storage
+- data available anywhere, anytime on any device
+- Integrates with your enterprise auth
+- encryption is required/critical
+	- data not in your control
+
+VDI/VDE (Virtual Desktop Infra/Environment)
+- virtualize desktop and run it in data center
+- all of computing power in data center
+- end-users OS becomes less important
+- enhanced security
+	- centralized/ez to manage, changes controlled, data doesn't leave data center
+
+Cloud access security broker (CASB)
+- how do you keep everything secure? and sec policies work in the cloud?
+- integrate a CASB
+- implemented as client software, local sec appliances or cloud based sec solutions
+- visibility: determine what apps in use, authorized use of app?`
+- compliance: users complying with HIPAA? PCI?
+- threat prevention: allow access by auth, prevent attacks
+- data security: ensure everything encrypted
+
+Security as a Serve (SECaaS)
+- instead of managing your own sec solution, move it to cloud
+- pay what you sue, scale up/down as needed
+- continuous monitoring
+- block emerging threats without deploying updates
+
+----
+
+
