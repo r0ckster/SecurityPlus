@@ -1,0 +1,379 @@
+FIREWALLS
+
+Network-based fws
+- filters traffic by port number
+- most OSI layer 4 (TCP/UDP)
+- some FWs filter OSI layer 7 (Application)
+- can encrypt traffic (VPN)
+- can proxy traffic
+- most fws can be layer 3 devices (routers)
+	- usually sits on the ingress/egress of the network
+
+Stateless fw
+- does not keep track of traffic flows
+- each packet examined individually
+- need 2-way rule
+
+Stateful fw (most fws today)
+- remembers state of the session
+- everythin within a valid flow is allowed
+- single rule enough (session table)
+
+
+Application-aware security devices
+- OSI Application Layer (7), all data in every packet
+- app layer gw, stateful multilayer inspection, deep packet inspection
+- requires some advanced decodes (every packet must be analyzed and categorized)
+- control traffic flows based on app (sql, twitter, youtube)
+
+IPS
+- identify app, apply app-specific vuln signatures to the traffic
+
+Host-based FW
+- work with OS to determine application
+
+Firewall rules
+- ACL (Access Control Lists)
+- allow/disallow traffic based on tuples
+- logical path, usually top-to-bottom
+- can be generic or very specific
+- Implicit deny, most FWs include a deny at the bottom
+
+---
+
+VPN Concentrators
+
+-often integrated into a FW
+-client software and often build in OS
+-SSL VPN(secure socket layer)
+	-tcp443, no req for digital cert like IPSec, from browser of light client
+-full tunnel means all traffic goes
+-split tunnel, some traffic not in tunnel
+-site-to-site VPN, almost always on
+-IPSec (Internet Protocol Security)
+	- security for OSI Layer 3 (auth and encryption for every packet)
+	- confidentiality and integrity/anti-replay (encryption and packet signing)
+	- standardized, multi-vendor possible
+	- two core IPSec protocols (Authentication Header, Ecapsulation Security Payload) AH and ESP
+		- AH, hash of the packet and a shared key (md5, sha1,sha2)
+		- ESP, encrypts the packet, md5/sha1/2 for hash, 3DES/AES for encryption
+
+---
+
+NIDS NIPS
+
+-watch network traffic for exploits, buffer overflows, XSS and other vuln
+-Passive monitoring
+	-examine copy of the traffic, port mirror (SPAN), network tap, can't block
+-Out-of-band response, when malicious traffic identified, IPS sens TCP RST frame > limits traffic
+-Inline monitoring
+	-IDS/IPS sits physically inline > all traffic through it
+-In-band response > bad traffic dropped at IPS before reaching network
+-Identification technologies
+	-signature based, look for perfect match
+	-anomaly based, builds baseline of normal
+	-behavior based, observe and report
+	-heurestic, use AI to identify
+-IPS rules
+	-determine what happens to bad traffic (block,allow,alert,etc.)
+	-thousands of rules, can be customized by group or individual
+	-takes time find balance between sec/alert noise/fp
+-False Positives
+	-report that isn't true, false alarm
+	-IDS/IPS information
+		-only as good as the signatures
+		-legit traffic could be marked as malicious
+		-time-consuming to research and resolve
+-False Negative
+	-report missed identifying something
+	-malicious traffic goes through, completely silent
+
+---
+
+Router and Switch Security
+
+Routers
+
+-Routes traffic between IP subnets
+-OSI layer 3 device
+-routers inside switches called "layer3 switch"
+- Layer2 = switch, Layer 3 = router
+- connects diverse network types: LAN,WAN,copper,fiber
+ACLs
+-allow/deny traffic, also used for NAT,QoS,etc.
+-defined on incoming or outgoing interface
+-evaluate criterias: source/dest IP, port numbers etc.
+Anti-spoofing
+-prevent MitM, DDoS, etc.
+- filter reserved IPs
+- RPF, Reverse Path Forwarding
+	- response to an inbound packed should return the same way
+	- if not, drop the packet
+
+Switches
+
+-bridgin done in hardware, Application-specifi integrated circuit (ASIC)
+-OSI layer 2 device, many ports (core of network), high bandwidth
+
+Switch port security
+-inside network relatively insecure VS outside
+-NAC (Network Access Control)
+	-IEEE 802.1X - Port-based NAC
+		- dont get access until authentication
+		- makes use of EAP and RADIUS (Extensible Auth Protocol / Remote Auth Dial in User Service)
+	-physical interfaces (not tcp/udp ports)
+	-admin should disable unused ports
+	- duplicate MAC address check, stop spoofers
+
+Loop prevention
+-connect two switches to each other
+-they'll send traffic back and forth forever
+-brings network down
+-Spanning Tree Protocol, IEEE standard 802.1D prevents loops in bridged (switched) networks
+
+Flood guard
+-configure a max/specific numb of source MAC addresses on interface
+-maintains a list of every source mac address, once exceeds maximum > port sec activates, interface usually disabled by default
+
+Layer 3 switches
+-swtich (layer 2) and router (layer 3) in the same physical device
+
+---
+
+Proxies
+
+-Sits between users and external network (Inet mostly)
+-receives user req and sends it on their behalf
+-caches info, access control, URL filter, content scan
+-some proxies invisible (transparent)
+-apps may need to know (setup) how to use the proxy (explicit)
+
+Application proxies
+- NAT, a network-level proxy
+- most proxies are app proxies
+- proxy may know only one app, HTTP
+- many are multipurpose proxies (HTTP,HTTPS,FTP,etc)
+
+Forward proxy
+-internal proxy, commonly used to protect and control user acces to Inet
+
+Reverse proxy
+-inbound traffic from Inet to your internal service
+	- Inet --- Proxy --- web server
+
+Open proxy
+-3rd-party,uncontrolled proxy
+-can be sec concern
+-often used to circumvent existing sec controls
+
+---
+
+Load Balancers
+
+-distribute the load on multiple servers, invisible to end-user
+-large-scale implementations: web server farms, db farms
+-fault tolerance, server outages have no effect, fast convergence
+-configurable load, manage across servers
+-TCP,SSL offload
+-caching,prioritization,content switching
+
+Scheduling
+-Round-robin, each server selected in turn
+-weighted, prioritize server use
+-dynamic, monitor server load > use lowest
+-Affinity
+	-many app require communication to same instance
+	-user "stuck" to the same server
+	-tracked through IPs,sessions IDs
+^active/active load balancing
+
+Active/passive load balancing
+-some servers active, some on standby
+-if active fails, passive takes it place
+
+---
+
+Access Points / WAP (Wireless access point)
+
+- not a wireless router, wireless router is a router and a AWP in single device
+- WAP is a bridge, OSI layer 2 device, extends wired network onto wireless network
+
+SSID management (Service Set Identifier)
+-name of the wireless network
+-disabling SSID broadcasting is more security through obscurity than actual security
+
+MAC filtering
+-Media Access Control, the harware address
+-keep unwanted devices out
+	-MAC easy to spoof
+	-again security through obscurity - no security at all
+
+Power level controls
+-power of the signal, not too much, not too little
+
+Band selection and bandwidths
+- Throughput, maximum theoretical, may vary
+- 2,4 and 5GHz
+- channel, differences in geo location
+
+Omnidirectional antennas
+-most common, signal evenly distributed on all sides, omni=all
+-good choise for most, but cant focus signal
+Directional antennas
+-focus the signal for increased distances
+-send/receive in single direction, focused transmission
+-antenna preformance measured in dBs
+-Yagi antenna, very directional and high gain
+-Parabolic antenna, focus the signal to a single point
+
+Wireless LAN controllers
+- centralized management
+- deploy new APS, performance/sec monitoring, reports
+- configure changes to all sites
+- usually proprietary system (Ubiquiti, Cisco), control paired with APs
+
+Managing wireless configurations
+-LWAPP - Lightweight Access Point Protocol
+- Cisco proprietary, CAPWAP is RFC standard, based on LWAPP
+-manage multiple APs simultaneously
+
+Thick/fat AP
+-AP handles most wireless task, switch is not wireless-aware
+Thin AP
+-just enough to be 802.11 wireless
+-intelligence in switch, less expensive
+
+---
+
+SIEM
+
+-Security Information and Event Management
+-logging security events and information
+-log aggregation and long-term storage
+-data correlation, link diverse data types
+-SOC, forensic analysis
+-time syncing critical for log sources - use NTP, very accurate
+-SYSLOG
+	-standard for message logging (diverse systems, consolidated log)
+-WORM drive technology - Write Once Read Many
+-Event de-duplication, filter out the noise, focus on real problems
+-constant information flow > track,alert,responses
+
+
+---
+
+Data Loss Prevention (DLP)
+-stop data "leakage" before hackers get it
+
+DLP systems
+-on your pc, endpoint dlp
+-on your network, data in motion
+-on your server, data at rest
+-USB blocking f.e.
+	-DLP on PC, allow or deny certain tasks
+
+Cloud-based DLP
+-located between users and inet
+-watch every byte of traffic, no hw/software
+-manage access to URLs, block file transfer to cloud storage
+-block virus/malware
+
+DLP and email
+-most critical risk vector, inbound threats and outbound data loss
+-check every email
+-inbound: block keywords / pihsihing / quarantine emails
+-outbound: fake wire transfers, W-2 transmission, employee info
+
+---
+
+Network Access Control
+
+Edge vs access control
+
+Control at the edge
+-your inet link, primary FW rules
+
+Access control
+-conrtol from where you are (inside or outside)
+-access based on many rules: user,group, location,app etc.
+-access easily revoked or changed
+
+Posture assessment
+-can't trust every device
+	- BYOD
+	- malware infection / missing AV
+	- unauthorized apps
+-before connecting to network, perform health check
+	- is it trusted device?
+	- running AV? updated?
+	- corp app installed?
+	- mobile device? disk encrypted?
+
+Health checks/posture assessment
+-Persisten agents
+	-permanently installed onto system, updates may be required
+-Dissolvable agents
+	-no installation, runs during posture assessment, terminates when no need
+-Agentless NAC
+	-integrated with Active Directory, check made during login/logoff
+	-cant be scheduled
+
+Failing your assessment
+- too dangerous to allow access
+- put to quarantine networks, notify admin
+- just enough network access to fix the issue
+- once resolved (like AV updated), try again
+
+---
+
+Mail Gateways
+
+-unsolicited email	
+	-stop it at gateway before reaches user
+	-on-site or cloud-based
+-email filtering, inbound/outbound
+-block spam, modify phishing links
+-anti-virus, block bad attachments
+-DLP (Data Loss Prevention), block confidential info in emails
+
+Identifying spam
+- whitelist, only receive from trusted
+- SMTP standards checking, block if not following standards
+- rDNS - reverse DNS, block if senders domain doesn't match IP
+- Tarpitting, intentionally slow down server conversation
+- recipient filtering, if not valid address > block
+
+Email encryption
+- almost all mail not encrypted
+- email encryption not always seamless
+- encryption can be required on the gateway
+	- based on policy, force encryption, send PW to recipient via txt msg
+- many email clients support encryption
+
+---
+
+Other Security Devices
+
+SSL accelerators
+-asymmetric encryption (like SSL handshake) is hard, need CPU power
+-offload the handshake process to different hw (ssl offload, ssl termination)
+-symmetric convo continues, but may not be encrypted between accelerator and the web server
+
+SSL/TLS decryption
+- used commonly to examine outgoing SSL
+- browser contains list of trusted CAs
+- with SSL proxy, Internal CA in devices and FW (SSL decryptor)
+
+Hardware Security Module (HSM)
+- High-end cryptographic hw
+- plug-in card or separate hw
+- key backup, secured storage
+- offload cpu overhead from other devices
+
+Media gateways
+- Converts between PSTN (Public Switched Telephone Network) and VoIP
+- ISDN trunk here, Ethernet with VoIP there
+- Sec significant concern
+	- disable all voice comm
+ 	- listen to comms, spam calls
+
