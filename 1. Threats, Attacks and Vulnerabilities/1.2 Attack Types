@@ -1,0 +1,374 @@
+Phising
+- social engineering with some spoofing
+- often via spam, IM etc
+- Vishing is done over phone (Voice)
+
+Spear phising
+- with inside info, attack more believable
+- spear phishing the CEO is "whaling"
+
+---
+
+Tailgating and Impersonation
+- policy for visitors (identify anyone)
+- one scan, one person, mantraps
+- pretend be someone you aren't, use details from dumpsters f.e.
+- attack victim with higher rank (pressure)
+- throw tons of tech detail around
+- nevere volunteer info, personal details, always verify
+
+---
+
+Dumpster diving
+- gather info from trash (names, phone numb.)
+- mostly legal, nobody owns trash
+- secure your trash, fence/locks and shred or burn
+
+---
+
+Shoulder surfing
+- very easy in public places
+- can be done with binoculars/telescopes, webcam
+- control your input, use privacy filter, keep monitor out of sight
+
+---
+
+Hoaxes
+- threat that doesn't actually exist, often consumes resources
+	- fwrd emails, wasted time etc.
+	- virushoax, can take much as time as actual virus
+
+---
+
+Watering Hole Attacks
+- find website the victim group uses, if their own site/network/policy is secure
+- infect the third-party sites (site vuln, email attachments)
+- defense in depth
+
+---
+
+Principles of Social Engineering
+- constantly changing
+- may involve multiple people/org, may be in person or electronic
+- Authority, pretends to be in charge (CEO/police)
+- Intimidation, bad things will happen
+- Consensus / Social proof, convince based on what's normally expected
+- Scarcity, must be done before time expires
+- Urgency, works with scarcity, quickly
+- Familiarity / Liking, common friends
+- Trust, safe, from IT
+
+---
+
+Denial of Service
+- force service to fail, overload it
+- competitive advantage, smokescreen for other exploit
+- turn off the buildings power
+- unintentional DoS
+	- multiple login, layer 2 loop without STP, bandwith limit...
+DDoS
+- botnets
+- traffic spike
+- Asymmetric threat, attacker may have fewe resource than victim
+- Amplification attacks increasing (small attack into big attack)
+	- turn internet services against victim
+	- use protocols (protocol abuse) with little authentication (NTP, DNS, ICMP)
+
+---
+
+MitM
+- Reditects your traffic, you won't know it was redirected
+- ARP poisoning (no sec in ARP)
+- "who is IP X" > "I am IP X, here's my MAC"
+- Man-in-the-Browser (MitB)
+	- malware/trojan does all the work, easy to proxy encrypted traffic
+	- everything looks normal to victim (happens behind scenes)
+	- waits you to login to your bank and cleans you out
+
+---
+
+Buffer Overflows
+- Overwriting a buffer of memory, spills over into other memory areas
+- Devs need perform bounds checking
+- not a simple exploit, takes time avoid crashing things
+- useful buffer overflow is repeatable
+
+---
+
+Data Injection
+- Code injection, adding own info into data stream
+- enabled bcs of bad programming, app should handle input and output
+- many different data types, HTML, SQL, XML, LDAP
+- SQL - Structured Query Language, most common database mngmt system language
+	- SQL Injection
+		- modifyiung SQL request, app shouldn't allow it
+	- XML (Extensible Markup Language), a set of rules for data transfer and storage
+		- XML injection, modifying XML requests, app should validate
+	- LDAP - Lightweight Directory Access Protocol
+		- created by telephone companies, widely used
+	- LDAP injection, modifies LDAP requests to manipulate app results
+
+---
+
+Cross-site scripting - XSS
+- !!CSS is something else!!
+- browser security flaws, info from one site could be shared with another
+- most common web app development errors
+	- takes advantage of trust in site
+	- complex and varied
+- Malware that uses JavaScript
+- Dont allow users to add own scripts to an input field (validate input)
+
+Non-persistent (reflected) XSS attack
+	- site allows to run in user input (search box common source)
+	- email link has script embedded in URL and executes in browser (as if it came from the server), hacker uses credentials/session IDs/ cookies to steal info
+
+Persistent (stored) XSS attack
+	- post message to social network, includes malicious payload
+	- no specific target, everyone gets the payload
+	- can spread quickly in social networking
+	- can be propagated further..
+
+---
+
+Cross-site Request Forgery
+- One-click attack, session riding
+- XSRF, CSRF (sea surf)
+- takes advantage of trust that web app has for the browser
+- web app development oversight
+	- app should have anti-forgery techniques added
+	- usually crypto token to prevent forgery
+
+
+---
+
+Privilege Escalation
+- Gain higher-lvl access to system than authentication allows
+	- exploits vuln, or bug/design flaw
+- High-priority vulnerability patches (want to close holes quick)
+- Horizontal privilege escalation (user A can access user B resources)
+- Data Execution Prevention, only data in executable areas can run
+- Address space layout randomization, prevent buffer overrun
+
+---
+
+DNS poisoning 
+- modify DNS server, modify client host file (host file precedents DNS queries)
+- send a fake response to valid DNS request, requires redirectioning
+
+Domain Hijacking
+-gain access to domain registration and you have control where traffic flows
+	- dont need to touch actual servers
+	- determines the DNS names DNS IP addresses
+- many ways to get in to account
+	- brute force, social eng...
+
+---
+
+Zero-Day Attacks
+- vulnerability not yet detected or published
+- hackers like to keep them undisclosed for personal gain
+
+---
+
+Replay Attacks
+- need access to raw network data
+	- network tap, ARP poisoning, malware on PC
+- gathered info may help, replay data to appear as someone else
+- this is not MitM attack, actual replay doesn't require original PC
+- Pass the hash...
+- Avoid with salt or encryption, use session ID to create unique auth hash each time
+
+---
+
+Client Hijacking Attacks
+- URL hijacking (typosquatting, brandjacking, misspell, top-level domain)
+	- sell badly spelled domain to actual owner
+		- redirect to competitor
+	- phising site, looks like real site
+	- infect with drive-by download
+- Clickjacking
+	- invisible layer on web page, actually cliking something else
+- Cookies and sessions IDs
+	- personal data, session ID stored in cookie, maintains sessions across multiple browser sessions
+- Header manipulation
+	- info gathering (wireshark, kismet)
+	- Exploits (XSS)
+	- Modify headers (Tamper, Firesheep, Scapy)
+	- Modify cookies
+- Encrypt e2e, Session ID monitors, VPN, HTTPS etc. (can't capture session ID if you can't see it)
+
+---
+
+Driver Manipulation
+- Driver is interaction between HW and OS, often trusted, opportunity for sec issues
+
+Shimming (middleman), filling space between two objects
+- windows includes own > compatibility mode (Application Compatibility Shim Cache)
+- malware authors write their own shims, to get around sec like UAC
+
+Refactoring
+- Metamorphic malware, different each time it's downloaded
+	- add NOP instructions, loops, pointless code
+- Can redesings itself
+	- reorder functions, modify app flow, reodred code
+- Tricks AV, difficult to match with signature detection
+
+---
+
+Spoofing
+- Pretend to be something you aren't (fake web server, dns etc.)
+- email address spoofing (sending address isn't really sender)
+- Called ID spoofing, incoming call info fake
+- MitM
+- MAC spoofing
+	- go around MAC-based ACLs, fake-out a weireless address filter
+	- difficult to detect
+	- MAC address change can be legitimate
+- IP address spoofing
+	- can be legit (Load balancing, load testing)
+	- ARP poisoning, DNS amplification / DDoS
+	- easier to identify than MAC add spoof
+		- apply FW rules, enable switch security
+
+---
+
+Wireless Replay Attacks
+- similiar to wired replay attack, wireless adds some capabilities
+- much easier to capture data, hotspots in the clear
+- WEP - Wired Equivalent Privacy
+	- broken sec protocol, could not stop replay of 802.11 packets
+	- ARP request replay attack
+	- can be cracked in seconds
+
+---
+
+Rogue Access Points 
+- Significant potential backdoor
+- very easy to setup wireless AP or enable wireless sharing
+- Schedule a periodic survey, walk around building, use third-party tools
+- Use 802.1X (Network Access Control), you must authenticate, regardless of the connection type
+
+Wireless Evil Twins
+- Conf it exactly as existing network
+	- same SSID and security settings
+- Overpower existing AP
+- WiFi hotspots easy to fool, usually open
+
+---
+
+Wireless Jamming
+- Radio frequency (RF) jamming, DoS, prevent wireless communication
+- Transmit interfering wireless signals
+	- decrease signal-to-noise ratio at receiving device
+	- receiving device can't hear the good signal
+- sometimes unintentional, interference, not jamming, microwave overn
+- Jamming is intentional
+- Many types
+	- constant, random bits / constant, legit frames
+ 	- data sent random times - random data and legit frames
+	- reactive jamming, only when someone tries to communicate
+- Needs to be close, difficult from distance
+- Need right equipment to hunt down the jam (directional antenna, attenuator)
+
+---
+
+WPS Attacks
+- Wi-Fi Protected Setup (originally called Wi-Fi Simple Config)
+- Allow easy setup for mobile
+- PIN, push a button, near-field communication, USB method
+- design flaw, built wrong from beginning
+- PIN is seven digits and a checksum
+	- easy to crack
+- Other WPS attacks
+	- default PIN in device
+	- WPS PIN may be poorly encrypted
+- Disable WPS
+
+---
+
+Bluejacking 
+- could send unsolicited message to another device via Bluetooth
+- Bluejack with an address book object
+- 3rd-party tools, Bloover, Bluesniff
+- harmless, annoying
+- been patched
+
+Bluesnarfing
+- Access a bluetooth-enabled device and transfer data
+- if you know the file, you can DL withouth auth
+- first major sec weakness in BT
+- patched
+
+----
+
+RFID Attacks
+-RFIF (Radio-frequency identification) is everywhere
+	- access badges, tracking, pet/animal identification
+	- Radar technology, radio energy transmitted to tag > RF powers tag > ID transmitted back, bidirectional communication
+	- some tag formats can be active/powered
+Attacks
+- Data capture > view communcation > replay attack
+- Spoof the reader, write your own data to the tag
+- Denial of Service, signal jam
+- Decrypt communication, many default keys in Internet
+
+NFC Attacks
+-NFC (near field communication)
+	-2-way wireless communication.. builds on RFID (which is mostly 1-way)
+	- Payment systems
+	- Bootstrap for other wireless (nfc helps with BT pairing)
+	- Access token, ID card, short range with encrypt support
+Attacks
+-Remote capture, frequency jam, relay/replay attack,  loss of RFC device control (lost phone)
+
+---
+
+Wireless Disassocitation Attacks
+- May not be able to stop it
+- DoS
+- 802.11 wireless incl many mngmt features
+	- how to find ap, manage QoS, associate/disassociate with AP etc.
+	- original wireless standards did not add protection to frames
+		- sent in clear, no auth or validation
+
+---
+
+Cryptographic Attacks
+- You've encrypted data, hacker will try to break the cryptography
+
+- Known plaintext attack (KPA)
+	- hacker has encrypted data and some plaintext (crib)
+	- may be able to find a "wedge" that's revealed in ciphertext
+
+- Password file
+	- different accross OS's, different hash methods, hash can't be reversed, you need to guess the correct pw and compare hashes
+	- Rainbow tables, an optimized / prebuilt set of hashes
+		- speed increase, but need different tables for different hash methods
+		- won't work with salted hashes
+
+- Dictionary attacks
+	- For common words as passwords, 1st thing to do with brute force, will catch low-hanging fruit
+
+- Brute force
+	- PW is the key (secret phrase, stored hash)
+	- Online
+		- keep trying log-in process, slow, account lock-outs
+	- Offline 
+		- obtain list of users and hashes, calculate PW hash > compare to stored hash, large resource requirement
+
+- Birthday attack = hash collision
+	- same hash value for 2 diff plaintexts, can be found through brute force
+	- protect yourself with large hash output size
+	- Hash digest supposed to be unique (MD5 can have this problem)
+
+- Downgrade attack
+	- force the system to use old/vuln encryption 
+- Weak implementations
+	- Weak encryption breaks the entire chain, 802.11 WEP, DES
+- Replay attacks
+	- a hash with no salt, no session ID track, no encryption
+	- counter f.e. with anything after TTL is discarded, like in Kerberos
+
+---
+
