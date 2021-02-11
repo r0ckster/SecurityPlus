@@ -1,0 +1,145 @@
+4.4 ACCOUNT MANAGEMENT
+
+Account Types
+
+User accounts
+- account on computer associated with a specific person
+- computer associates user with a specific identification number
+- storage/files can be private to that user, even if another user in PC
+- no privileged access to OS
+- most common account
+
+Shared and generic accounts
+- Guest login, anonymous login
+- difficult to create audit trail
+- difficult to determine proper privileges
+- PW management becomes difficult
+- should be avoided
+
+Service accounts
+- used exclusively by services running on a computer
+- no interactive/user access (ideally)
+- web serve, db server etc.
+- access can be defined for a specific service
+	- web server right/permissions different than db server
+- commonly use username and PW
+	- determine best policy for PW updates
+
+Privileged accounts
+- elevated access to one or more systems (admin,root)
+- complete access to system
+	- often used to manage hw, drivers, sw installation
+- should not be used for normal administration
+- needs to be highly secured
+	- strong PW, 2FA, scheduled pw changes
+
+---
+
+Account Management
+
+Least privilege
+- rights/permissions should be bare minimum
+	- only get what's needed to complete your objective
+- all user accounts must be limited, apps should be running with min. privileges
+- don't allow users to run with admin privileges, limits scope of malicious behaviour
+
+On-boarding
+- bring new person into the org
+- IT agreements need to be signed, handbook or separate AUP
+- create accounts, associate user with proper groups
+- provide req IT hw: laptop, tablet etc, preconfigured and ready to go
+
+Off-boarding
+- process should be pre-planned
+- what happens to hw, data
+- account info usually deactivated (not always deleted)
+
+Perform routine audits
+- policy followed?
+- things can change
+- certain action can be automatically identified
+	- consider tool for log analysis
+
+Auditing
+- permission auditing
+	- correct permissions?
+	- some admins don't need to be there
+	- scheduled recertification
+- usage auditing
+	- how are resources used?
+	- systems and apps secure?
+- time-of-day restriction
+	- nobody needs to acces to X at X clock
+
+Standard naming convention
+- Unique: username shouldn't conflict with another, same accross systems
+- Consistent: shouldn't describe role/status
+- Persistent: same username for the duration of employment
+- Memorable: ez to remember, doesn't mean recognizable
+
+Account maintenance
+- account createion: initial provisioning, pw management, group/permission assignments
+- Periodic updates: pw reset, forced updates, audits
+- Deprovisioning: disable account, archive user doc and encryption keys
+
+Group-based access control
+- set privileges based on what you do
+	- many users in single group, set privileges on the group
+- users can belong to multiple groups
+	- group permissions can overlap
+	- how to determine effective permissions?
+		- not easy
+		- implicit permissions can cause problems
+
+Location-based policies
+- user access based on location
+	- gps, very accurate
+	- 802.11 wireless, less accurate
+	- IP, not accurate
+- restrict app use
+- apply security rules
+	- your IP is associated with IP block in China
+	- we don't have office in China
+	- permission not granted
+
+---
+
+Account Policy Enforcement
+
+Credential management
+- all that stands between the outside world and all of the data
+- PW must not be embedded in the app
+	- everything needs to reside on server, not client
+- comms should be encrypted, authentication traffic should be impossible to see
+
+Configuring settings
+- Windows Group Policy Management
+	- apply sec and admin setting across many PCs
+- different than NTFS or Share permissions: control use of OS
+- Linked to AD administrative boundaries (sites, domain, OUs, groups, locations etc.)
+
+Group Policy control
+- administrative policies
+	- remove/add program
+	- prohibit X, allow Y
+- sec policies
+	- specify min PW length
+	- max sec log size
+	- enforce user login restrictions
+
+PW complexity and length
+- no single words, no obvious pw
+- mix upper/lower case, use special characters, don't replace o with 0
+- strong PW atleast 8 charactes, consider phrase or set of words
+- prevent PW reuse, system remembers PW history, req unique pws
+
+PW expiration and recovery
+- all should expire (30, 60, 90 days)
+- critical systems might change more freq
+- recovery process should not be trivial
+
+Account lockout and disablement
+- too many wrong PW will cause lockout
+- should be normal for most users
+	- might cause issues for service accounts, but notice bruteforce
+- disable accounts instead of deleting them
